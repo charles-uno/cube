@@ -60,11 +60,15 @@ For a three-color theme that means:
 - Three enablers per color
 - Three on-theme multicolor cards, one per color pair (eg UBR -> UB, BR, UR)
 
-Payoffs should generally *not* overlap between themes. The payoffs should also be *pretty strong*. We want players to take these cards early and draft their deck around them. I expect a decent number of payoffs in the cube to be rares rather than uncommons.
+Enablers will often support more than one theme. This is good. For example, graveyard decks and lifegain decks are both happy to see [[Scout the City]]. 
+
+Payoffs should generally *not* overlap between themes. The payoffs should also be *pretty strong*. These are signposts. We want drafters to pick these early and draft around them. I expect a decent number of payoffs in the cube to be rares rather than uncommons.
 
 Avoid bombs which incidentally support a theme but in practice dominate a game on their own (eg [[Nova Hellkite]] does not care about dragon kindred synergies). 
 
 Mana curve matters. Avoid logjams where most of the cards have the same mana value. 
+
+Note that ongoing payoffs (eg [[Marauding Mako]]) are better signposts then one-time payoffs (eg [[Fiery Temper]]). If you can only find one-time payoffs, throw a few extras in there to ensure we have enough depth. 
 
 ## Respect the Card Pool
 
