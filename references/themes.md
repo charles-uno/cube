@@ -60,7 +60,7 @@ For a three-color theme that means:
 - Three enablers per color
 - Three on-theme multicolor cards, one per color pair (eg UBR -> UB, BR, UR)
 
-Payoffs should generally *not* overlap between themes. The payoffs should also be *pretty strong*. We want players to take these cards early and draft their deck around them. 
+Payoffs should generally *not* overlap between themes. The payoffs should also be *pretty strong*. We want players to take these cards early and draft their deck around them. I expect a decent number of payoffs in the cube to be rares rather than uncommons.
 
 Avoid bombs which incidentally support a theme but in practice dominate a game on their own (eg [[Nova Hellkite]] does not care about dragon kindred synergies). 
 
