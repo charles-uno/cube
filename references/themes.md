@@ -21,16 +21,6 @@ Three-color themes are the other option. One per shard (eg UBR Discard), one per
 
 Notably: three-color themes only add variety if people are playing two-color decks! This means we probably want the fixing to be pretty modest. Probably comparable to BLB or ONE; these are recent sets where decks typically did not play a third color. 
 
-## Theme-Aware Card Choices
-
-We want the themes to be prominent, but we also want to make sure that each color is doing the stuff that it's supposed to do. 
-
-For example, B is supposed to get creatures back from the graveyard. If ETB value shenanigans are on-theme for B, we may include [[Graveshifter]]. If not, we might instead choose [[Gathering of Darkness]]. Too many easily-blinked B creatures could distract from the intended theme. 
-
-## Respect the Card Pool
-
-We can, without too much trouble, assemble a BRG Go-Wide theme. We can also easily assemble a +1/+1 Counters theme in BGU. However, if we do, we'll have trouble finding things to do with W. A large portion of the W cards we would play, especially at high mana value, are about +1/+1 counters and/or 1/1 tokens!
-
 ## Potential Themes
 
 Here are some themes that have showed up in recent sets. This is a starting point, not an exhaustive list. 
@@ -75,4 +65,16 @@ Payoffs should generally *not* overlap between themes. The payoffs should also b
 Avoid bombs which incidentally support a theme but in practice dominate a game on their own (eg [[Nova Hellkite]] does not care about dragon kindred synergies). 
 
 Mana curve matters. Avoid logjams where most of the cards have the same mana value. 
+
+## Respect the Card Pool
+
+We can, without too much trouble, assemble a BRG Go-Wide theme. We can also easily assemble a +1/+1 Counters theme in BGU. However, if we do, we'll have trouble finding things to do with W. A large portion of the W cards we would play, especially at high mana value, are about +1/+1 counters and/or 1/1 tokens!
+
+## Off-Color Bleed
+
+The cube should never include a powerful off-color payoff for any theme. For example, if we have UR Spellslinger (or URW Spellslinger) we should not include [[Dragonsguard Elite]] in the cube. This card would be a recipe for confusion and frustration during the draft! 
+
+Off-color enablers are acceptable (and inevitable). For example, if we have WUB Artifacts, it's still ok to include a few artifact creatures in R and G. Just make sure the number is small compared to W, U, and B. 
+
+Card choices can often be tweaked to reduce bleed. For example, we expect to have some B cards which return creatures from the graveyard. If ETB Value is on-theme for B, we might include [[Graveshifter]]. If not, we might instead play [[Gathering of Darkness]] in that slot. 
 
