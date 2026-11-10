@@ -2,9 +2,9 @@
 
 You may use these tools to query, filter, and evaluate cards. 
 
-To reduce duplicate queries, you may cache data locally in `data/`. Details are up to you, but JSON is probably easiest
+To reduce duplicate queries, you may cache data locally in `cache/`. Details are up to you, but JSON is probably easiest
 
-You may write scripts for data analysis. Put them in `scripts/`
+You may write scripts for data analysis. Put them in `cache/` too
 
 ## Scryfall
 

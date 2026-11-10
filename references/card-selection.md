@@ -16,7 +16,7 @@ Universes Beyond *are* allowed
 
 MTG is a big game with decades of expansions (and baggage). We are mindful about what we include and exclude. Right now that looks like:
 
-- No searching libraries. It slows down games too much. This includes basic lands
+- No searching libraries for anything other than a basic land. It slows down games too much. Also leads to repetitive play
 - No double-faced cards. Bad for draft logistics
 - No control effects. No effects that exile your card on my side of the table (eg [[Fiend Hunter]]). Easy to accidentally switch cards between decks
 - No external minigames: monarch, dungeons, speed, etc
@@ -31,6 +31,14 @@ MTG is a big game with decades of expansions (and baggage). We are mindful about
 We may tweak this over time. But for the moment, these are hard rules. 
 
 Open question: what about clues, treasures, etc? I'm inclined against them, but could be swayed
+
+## Land Tutors
+
+I'm pretty skeptical of any search/shuffle effects. They slow down the game a lot. My starting point is to exclude them entirely from the cube. 
+
+Notably, this does *not* kill ramp and multicolor decks. We've still got a decent bench including [[Explore]], [[Clifftop Lookout]], [[Zimone's Experiment]], etc. 
+
+That all said, I have observed that WOTC has put a *lot* of land tutors in recent sets -- landers, [[Evolving Wilds]], landcycling, etc. And these same sets seem to rate highly among players. Maybe mana screw is worse than shuffling. 
 
 ## Counters
 
@@ -58,9 +66,7 @@ This limitation does not apply to vanilla 1/1 tokens or a few other common ones,
 
 ## Counterplay
 
-[[Disenchant]] effects are typically not worth main-decking in Limited, but once in a while you'll get blown out by an artifact or enchantment that you can't interact with. This, to me, is bad tension. We avoid this issue entirely via blanket exclusion of noncreature artifacts and noncreature enchantments. 
-
-On a similar note, we need to make sure to include appropriate interaction for the plays that *are* available. If it's possible to go wide, we need sweepers. If it's possible to go big, we need removal that can hit big creatures. If lands are important, we need a (non-oppressive) way to interact with them. If graveyard homework is a theme, we need a way to interact with that too.
+If it's possible to go wide, we need sweepers. If it's possible to go big, we need removal that can hit big creatures. If lands are important, we need (non-oppressive) ways to interact with them. If graveyard homework is a theme, we need a way to interact with that too.
 
 We can also note: conditional interaction is more interesting than unconditional interaction. In a cube with a significant number of artifact creatures, [[Go for the Throat]] is just a more interesting card than [[Fell]]
 

@@ -27,7 +27,7 @@ Here are some themes that have showed up in recent sets. This is a starting poin
 
 - Lifegain
 - Discarding cards -- madness, mayhem, [[Marauding Mako]]
-- Multicolor -- converge, domain, vivid
+- Multicolor -- converge, domain, vivid. This one is tricky, but not impossible, without fetching
 - Artifacts -- affinity, metalcraft
 - Goblins or some other kindred type that uses 1/1 tokens
 - Zombies or some other kindred type that uses 2/2 tokens
@@ -67,7 +67,7 @@ Payoffs should generally *not* overlap between themes. The payoffs should also b
 
 Avoid bombs which incidentally support a theme but in practice dominate a game on their own (eg [[Nova Hellkite]] does not care about dragon kindred synergies). 
 
-Mana curve matters. Avoid logjams where most of the cards have the same mana value. 
+Mana curve matters. No need to hit specific metrics, but watch out for logjams where most of the cards sit at the same mana value. 
 
 Note that ongoing payoffs (eg [[Marauding Mako]]) are better signposts then one-time payoffs (eg [[Fiery Temper]]). If you can only find one-time payoffs, throw a few extras in there to ensure we have enough depth. 
 

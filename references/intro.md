@@ -4,8 +4,14 @@ Uncommons are the most satisfying part of a booster draft. They're in the sweet 
 
 This cube leans into that feeling. No bombs that steal a game solo. No forgettable filler. Every card is a role-player that invites you to build your deck around it. There are a million different ways to connect the dots. 
 
-Commons and rares *are* allowed. But the bulk of the cube is uncommons, and they set the vibe.
+Commons and rares *are* allowed. And of course, some cards are stronger than others. But the bulk of the cube is uncommons, and they set the vibe. 
 
-## Cube Size
+## Size and Shape
 
 360 cards. We may drop it to 270 if we have trouble filling pods. Definitely no bigger
+
+Tentative color distribution. Everything is judged by color identity.
+
+- 58 cards per color
+- 5 cards per color pair
+- 20 colorless and 3+ color

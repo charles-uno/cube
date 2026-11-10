@@ -23,17 +23,15 @@ Open question: what about other tokens? There are plenty of ways to produce 2/1,
 
 ### Kindred Batches
 
-Some creature types are batched, like Outlaws from OTJ. This can combine two sparse themes into a viable one. Examples:
+We may choose to batch creature types together, like Outlaws from OTJ. This allows us to combine several sparse themes into one solid theme. For example: 
 
-- Skeletons, Vampires, and Zombies are *Undead* 
-- Dinosaurs, Dragons, and Wurms are *Behemoths*
-- Faeries, Goblins, and Kithkin are *Fey*
-- Knights, Soldiers, and Warriors are *Fighters*
-- Avatars, Elementals, and Incarnations are *Primordials*
+- Undead: Skeletons, Vampires, and Zombies
+- Behemoths: Dinosaurs, Dragons, and Wurms
+- Fighters: Berserkers, Knights, Soldiers, and Warriors
 
 In each case, buffs and debuffs from the specific creature type are updated to cover the whole batch. For example, [[Legion Lieutenant]] would be updated from "Vampires get +1/+1" to "Undead get +1/+1"
 
-Again, we are not married to these specific batches. They may be tweaked (eg, Fey could include Elves or Merfolk) or we could use different batches entirely.
+We are not married to these specific batches. You are free to suggest others. Just make sure batches are thematically and mechanically coherent. For example, dinosaurs and dragons are big scaly monsters; it would not make sense to include goblins in that same batch. 
 
 ### Domain Tri-Lands
 
