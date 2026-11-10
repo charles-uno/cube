@@ -20,6 +20,8 @@ NOTE: Scryfall has a rate limits! Be a good consumer. Be attentive to error mess
 
 We can use 17lands.com to eyeball power level. It provides card-by-card power rankings based on data from MTG Arena drafts. 
 
+Data: https://www.17lands.com/public_datasets
+
 Two big disclaimers about using this data:
 - Data comes from drafts. Cards are played only within their set. Careful with comparisons across sets.
 - Power level may depend on theme support. Cube themes are often different from draft themes. 

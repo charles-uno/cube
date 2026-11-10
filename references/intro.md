@@ -12,6 +12,9 @@ Commons and rares *are* allowed. And of course, some cards are stronger than oth
 
 Tentative color distribution. Everything is judged by color identity.
 
-- 58 cards per color
+- 57 cards per color
 - 5 cards per color pair
-- 20 colorless and 3+ color
+- 25 colorless and 3+ color
+
+The cube has traditionally included the ten shard/wedge lands (eg [[Jungle Shrine]]) as the backbone of its fixing. These count against the colorless and 3+ color category. Vivid lands (eg [[Vivid Creek]]) are also a likely option; these are monocolored.
+

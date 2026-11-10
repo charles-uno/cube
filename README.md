@@ -1,2 +1,3 @@
-# cube
+# Cube
+
 Configs and data for my MTG cube

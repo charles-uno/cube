@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGW Theme Brainstorming — Tap/Untap & Alternatives</title>
+  <style>
+    :root {
+      --bg: #121418;
+      --surface: #1b1f27;
+      --border: #2e3543;
+      --text: #e6e9ef;
+      --muted: #9aa2b1;
+      --accent: #7aa2f7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 24px 80px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      max-width: 1080px;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+    }
+
+    .theme-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+
+    .theme-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .theme-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verdict-pill {
+      font-size: 0.75rem;
+      color: #c3e88d;
+      background: rgba(195, 232, 141, 0.1);
+      border: 1px solid rgba(195, 232, 141, 0.28);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .theme-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin: 0 0 14px;
+    }
+
+    /* Always 4 columns side-by-side */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .slot-group h3 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .slot-group h3.sub-role {
+      margin-top: 12px;
+    }
+
+    .slot-group h3 .mana-sym {
+      width: 14px;
+      height: 14px;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Compact Autocard Trigger */
+    .autocard {
+      display: inline-block;
+      color: var(--accent);
+      background: rgba(122, 162, 247, 0.08);
+      border: 1px solid rgba(122, 162, 247, 0.22);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 500;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .autocard:hover {
+      background: rgba(122, 162, 247, 0.2);
+      border-color: var(--accent);
+    }
+
+    /* Mana Symbol SVGs */
+    .pips {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mana-sym {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
+    }
+
+    /* Floating Card Image Popover */
+    #card-popover {
+      position: fixed;
+      z-index: 9999;
+      width: 260px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px) scale(0.98);
+      transition: opacity 0.08s ease, transform 0.08s ease;
+    }
+
+    #card-popover.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #pop-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 488 / 680;
+      border-radius: 12px;
+      background: #181b22;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RGW Theme Brainstorming — Tap/Untap & Alternatives</h1>
+  <p class="subtitle">
+    21-card Proofs of Concept (3 payoffs + 3 enablers per color + 3 two-color signposts) with rare signposts included. Hover any card name to view its image.
+  </p>
+
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+        </span>
+        <span>Current Theme (Pushed): Tap/Untap Shenanigans (Saddle, Survival &amp; Tap Triggers)</span>
+      </h2>
+      <span class="verdict-pill">GW is genuinely strong with rares; Red &amp; RG remain structurally thin</span>
+    </div>
+    <p class="theme-note">Adding rare signposts (Wylie Duke, Sunstar Chaplain, Ornery Tumblewagg, Kona, Hawkeye, Warden of the Inner Sky, Kirol) gives drafters real early-pick direction. However, GW still carries 75% of the payoff weight—Red&#x27;s tap triggers are mostly rummagers or Mounts that act more like enablers, and RG&#x27;s only options are Radha (which needs Domain) or Scarlet Spider (Web-slinging).</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Hawkeye, Master Marksman">Hawkeye, Master Marksman</span><span class="card-meta">R · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Reckless Racer">Reckless Racer</span><span class="card-meta">R · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Vaultguard Trooper">Vaultguard Trooper</span><span class="card-meta">R · MV5 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Team Tactics">Team Tactics</span><span class="card-meta">R · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Gila Courser">Gila Courser</span><span class="card-meta">R · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Dracosaur Auxiliary">Dracosaur Auxiliary</span><span class="card-meta">R · MV6 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Ornery Tumblewagg">Ornery Tumblewagg</span><span class="card-meta">G · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Kona, Rescue Beastie">Kona, Rescue Beastie</span><span class="card-meta">G · MV4 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Rambling Possum">Rambling Possum</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="card-meta">W · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Dawnstrike Vanguard">Dawnstrike Vanguard</span><span class="card-meta">W · MV6 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Warden of the Inner Sky">Warden of the Inner Sky</span><span class="card-meta">W · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Bounding Felidar">Bounding Felidar</span><span class="card-meta">W · MV6 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Radha, Coalition Warlord">Radha, Coalition Warlord</span><span class="card-meta">GR · MV4 · U</span></li>
+          <li><span class="autocard" data-card="Wylie Duke, Atiin Hero">Wylie Duke, Atiin Hero</span><span class="card-meta">GW · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Kirol, Attentive First-Year">Kirol, Attentive First-Year</span><span class="card-meta">RW · MV3 · R</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+        </span>
+        <span>Alternative A: +1/+1 Counters &amp; Modified (Backup, Outlast, Support &amp; Scaling)</span>
+      </h2>
+      <span class="verdict-pill">Top Recommendation — Deepest card pool, flashy rares, zero conflict with other 9 themes</span>
+    </div>
+    <p class="theme-note">None of the other 9 themes claim +1/+1 counters. Every color and guild pair in RGW has standout rare and uncommon signposts, and the enablers cross-pollinate naturally with WBG Lifegain (Ajani&#x27;s Pridemate, Trelasarra), BRG Ferocious (growing creatures to Power 4+ by turn 3!), WUB Artifacts (Arcbound Condor), and GWU Blink (Backup / Support ETBs).</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Death-Greeter&#x27;s Champion">Death-Greeter&#x27;s Champion</span><span class="card-meta">R · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Thundering Raiju">Thundering Raiju</span><span class="card-meta">R · MV4 · R</span></li>
+          <li><span class="autocard" data-card="War Machine, Avenging Arsenal">War Machine, Avenging Arsenal</span><span class="card-meta">R · MV5 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Cacophony Scamp">Cacophony Scamp</span><span class="card-meta">R · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Voldaren Thrillseeker">Voldaren Thrillseeker</span><span class="card-meta">R · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Fearless Skald">Fearless Skald</span><span class="card-meta">R · MV5 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Benevolent Hydra">Benevolent Hydra</span><span class="card-meta">G · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Kami of Whispered Hopes">Kami of Whispered Hopes</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Inspiring Call">Inspiring Call</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Oran-Rief Ooze">Oran-Rief Ooze</span><span class="card-meta">G · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Sage of the Fang">Sage of the Fang</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Emil, Vastlands Roamer">Emil, Vastlands Roamer</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Dusk Legion Duelist">Dusk Legion Duelist</span><span class="card-meta">W · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Generous Pup">Generous Pup</span><span class="card-meta">W · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Abzan Falconer">Abzan Falconer</span><span class="card-meta">W · MV3 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Hopeful Initiate">Hopeful Initiate</span><span class="card-meta">W · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Metastatic Evangel">Metastatic Evangel</span><span class="card-meta">W · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Boon-Bringer Valkyrie">Boon-Bringer Valkyrie</span><span class="card-meta">W · MV5 · R</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Halana and Alena, Partners">Halana and Alena, Partners</span><span class="card-meta">GR · MV4 · R</span></li>
+          <li><span class="autocard" data-card="Conclave Mentor">Conclave Mentor</span><span class="card-meta">GW · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Araña, Heart of the Spider">Araña, Heart of the Spider</span><span class="card-meta">RW · MV3 · R</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+        </span>
+        <span>Alternative B: Attacking &amp; Combat Triggers (Battalion, Pack Tactics &amp; Raid)</span>
+      </h2>
+      <span class="verdict-pill">Strong &amp; Proactive — Bridges RWB Go-Wide and BRG Power 4+</span>
+    </div>
+    <p class="theme-note">Rewards turning creatures sideways every turn via &#x27;Whenever you attack&#x27;, Battalion (3+ attackers), and Pack Tactics / Formidable (total power 6+ or 8+). Acts as natural glue between RWB Go-Wide (which supplies extra bodies for Battalion) and BRG Behemoths (which supplies high power for Pack Tactics).</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Searslicer Goblin">Searslicer Goblin</span><span class="card-meta">R · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Battlesong Berserker">Battlesong Berserker</span><span class="card-meta">R · MV4 · U</span></li>
+          <li><span class="autocard" data-card="Razorkin Hordecaller">Razorkin Hordecaller</span><span class="card-meta">R · MV5 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Intrepid Ace">Intrepid Ace</span><span class="card-meta">R · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Goro-Goro, Disciple of Ryusei">Goro-Goro, Disciple of Ryusei</span><span class="card-meta">R · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Reckless Bushwhacker">Reckless Bushwhacker</span><span class="card-meta">R · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Werewolf Pack Leader">Werewolf Pack Leader</span><span class="card-meta">G · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Hazardroot Herbalist">Hazardroot Herbalist</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Surrak, the Hunt Caller">Surrak, the Hunt Caller</span><span class="card-meta">G · MV4 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Pawpatch Recruit">Pawpatch Recruit</span><span class="card-meta">G · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Beastcaller Savant">Beastcaller Savant</span><span class="card-meta">G · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Call of the Herd">Call of the Herd</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Adeline, Resplendent Cathar">Adeline, Resplendent Cathar</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Firemane Commando">Firemane Commando</span><span class="card-meta">W · MV4 · R</span></li>
+          <li><span class="autocard" data-card="Captain America, Skybound">Captain America, Skybound</span><span class="card-meta">W · MV5 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Usher of the Fallen">Usher of the Fallen</span><span class="card-meta">W · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Resolute Reinforcements">Resolute Reinforcements</span><span class="card-meta">W · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Kinjalli&#x27;s Dawnrunner">Kinjalli&#x27;s Dawnrunner</span><span class="card-meta">W · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Targ Nar, Demon-Fang Gnoll">Targ Nar, Demon-Fang Gnoll</span><span class="card-meta">GR · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Bast, Panther Goddess">Bast, Panther Goddess</span><span class="card-meta">GW · MV4 · R</span></li>
+          <li><span class="autocard" data-card="Firemane Avenger">Firemane Avenger</span><span class="card-meta">RW · MV4 · R</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+        </span>
+        <span>Alternative C: Heroic / Valiant &amp; Combat Tricks (Target Matters)</span>
+      </h2>
+      <span class="verdict-pill">High-Synergy Tempo — Bridges cleanly with URW Spellslinger</span>
+    </div>
+    <p class="theme-note">Combines classic Heroic/Repartee (&#x27;Whenever you cast a spell that targets...&#x27;) with Bloomburrow&#x27;s Valiant (&#x27;Whenever this becomes the target of a spell OR ability you control&#x27;). Because Valiant triggers on abilities too, Backup creatures, Saddle/Mount buffs, and tap abilities all trigger your payoffs alongside combat tricks.</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Heartfire Hero">Heartfire Hero</span><span class="card-meta">R · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Emberheart Challenger">Emberheart Challenger</span><span class="card-meta">R · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Zada, Hedron Grinder">Zada, Hedron Grinder</span><span class="card-meta">R · MV4 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Reckless Rage">Reckless Rage</span><span class="card-meta">R · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Invigorated Rampage">Invigorated Rampage</span><span class="card-meta">R · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Temur Battle Rage">Temur Battle Rage</span><span class="card-meta">R · MV2 · C</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Pawpatch Recruit">Pawpatch Recruit</span><span class="card-meta">G · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Legolas, Master Archer">Legolas, Master Archer</span><span class="card-meta">G · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Gnarlback Rhino">Gnarlback Rhino</span><span class="card-meta">G · MV4 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Blossoming Defense">Blossoming Defense</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Get a Leg Up">Get a Leg Up</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Ram Through">Ram Through</span><span class="card-meta">G · MV2 · C</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Illuminator Virtuoso">Illuminator Virtuoso</span><span class="card-meta">W · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Hawkeye, Bowslinger">Hawkeye, Bowslinger</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Whiskervale Forerunner">Whiskervale Forerunner</span><span class="card-meta">W · MV4 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Enter the Avatar State">Enter the Avatar State</span><span class="card-meta">W · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Valorous Stance">Valorous Stance</span><span class="card-meta">W · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Mavinda, Students&#x27; Advocate">Mavinda, Students&#x27; Advocate</span><span class="card-meta">W · MV3 · M</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="The Howling Abomination">The Howling Abomination</span><span class="card-meta">GR · MV5 · R</span></li>
+          <li><span class="autocard" data-card="Beta Ray Bill">Beta Ray Bill</span><span class="card-meta">GW · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Feather, the Redeemed">Feather, the Redeemed</span><span class="card-meta">RW · MV3 · R</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+        </span>
+        <span>Alternative D: Landfall &amp; Lands Matter (Extra Land Drops &amp; Earthbend)</span>
+      </h2>
+      <span class="verdict-pill">Great in RG/GW and shares enablers with GUR, but lacks an RW signpost</span>
+    </div>
+    <p class="theme-note">GUR Multicolor already wants non-tutor land-ramp enablers (Explore, Clifftop Lookout, Molt Tender, Vivid lands, Tri-lands), and recent sets gave Red and White real Landfall/Earthbend threats. The main flaw: RW has zero true Landfall gold cards, and avoiding fetchlands caps multi-landfall turns.</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Reckless Pyrosurfer">Reckless Pyrosurfer</span><span class="card-meta">R · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Zell Dincht">Zell Dincht</span><span class="card-meta">R · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Territorial Bruntar">Territorial Bruntar</span><span class="card-meta">R · MV6 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Nahiri&#x27;s Lithoforming">Nahiri&#x27;s Lithoforming</span><span class="card-meta">R · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Koth, the Geomancer">Koth, the Geomancer</span><span class="card-meta">R · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Erica Ortegas, Plucky Pilot">Erica Ortegas, Plucky Pilot</span><span class="card-meta">R · MV4 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Tifa Lockhart">Tifa Lockhart</span><span class="card-meta">G · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Mole Man, Moloid Master">Mole Man, Moloid Master</span><span class="card-meta">G · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Rampaging Baloths">Rampaging Baloths</span><span class="card-meta">G · MV6 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Molt Tender">Molt Tender</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Explore">Explore</span><span class="card-meta">G · MV2 · C</span></li>
+          <li><span class="autocard" data-card="Clifftop Lookout">Clifftop Lookout</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Fearless Fledgling">Fearless Fledgling</span><span class="card-meta">W · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Canyon Jerboa">Canyon Jerboa</span><span class="card-meta">W · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Emeria Angel">Emeria Angel</span><span class="card-meta">W · MV4 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Ambrosia Whiteheart">Ambrosia Whiteheart</span><span class="card-meta">W · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Kor Skyfisher">Kor Skyfisher</span><span class="card-meta">W · MV2 · C</span></li>
+          <li><span class="autocard" data-card="Earthshape">Earthshape</span><span class="card-meta">W · MV3 · R</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Mina and Denn, Wildborn">Mina and Denn, Wildborn</span><span class="card-meta">GR · MV4 · R</span></li>
+          <li><span class="autocard" data-card="Maja, Bretagard Protector">Maja, Bretagard Protector</span><span class="card-meta">GW · MV5 · U</span></li>
+          <li><span class="autocard" data-card="Tannuk, Memorial Ensign">Tannuk, Memorial Ensign</span><span class="card-meta">GR · MV3 · U</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Card Image Tooltip -->
+  <div id="card-popover" aria-hidden="true">
+    <img id="pop-img" alt="" />
+  </div>
+
+  <script>
+    const popover = document.getElementById("card-popover");
+    const popImg = document.getElementById("pop-img");
+
+    function slugify(name) {
+      return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function scryfallImgUrl(name) {
+      return `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(name)}&format=image&version=normal`;
+    }
+
+    document.querySelectorAll(".autocard").forEach(el => {
+      const name = el.dataset.card || el.textContent.trim();
+      const localPath = `cache/images/${slugify(name)}.jpg`;
+      const remoteUrl = scryfallImgUrl(name);
+
+      el.addEventListener("mouseenter", (e) => {
+        popImg.onerror = () => {
+          popImg.onerror = null;
+          popImg.src = remoteUrl;
+        };
+        popImg.src = localPath;
+        popImg.alt = name;
+        popover.classList.add("visible");
+        positionPopover(e);
+      });
+
+      el.addEventListener("mousemove", positionPopover);
+      el.addEventListener("mouseleave", () => {
+        popover.classList.remove("visible");
+      });
+    });
+
+    function positionPopover(e) {
+      const pad = 16;
+      const w = 260;
+      const h = 362;
+      let x = e.clientX + pad;
+      let y = e.clientY + pad;
+
+      if (x + w > window.innerWidth - 12) {
+        x = e.clientX - w - pad;
+      }
+      if (y + h > window.innerHeight - 12) {
+        y = window.innerHeight - h - 12;
+      }
+      popover.style.left = `${Math.max(12, x)}px`;
+      popover.style.top = `${Math.max(12, y)}px`;
+    }
+  </script>
+</body>
+</html>

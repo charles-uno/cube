@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GWU Tap/Untap — Merfolk/Fey Batching & Pure Mechanics</title>
+  <style>
+    :root {
+      --bg: #121418;
+      --surface: #1b1f27;
+      --border: #2e3543;
+      --text: #e6e9ef;
+      --muted: #9aa2b1;
+      --accent: #7aa2f7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 24px 80px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      max-width: 1080px;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+    }
+
+    .theme-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+
+    .theme-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .theme-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verdict-pill {
+      font-size: 0.75rem;
+      color: #c3e88d;
+      background: rgba(195, 232, 141, 0.1);
+      border: 1px solid rgba(195, 232, 141, 0.28);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .theme-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin: 0 0 14px;
+    }
+
+    /* Always 4 columns side-by-side */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .slot-group h3 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .slot-group h3.sub-role {
+      margin-top: 12px;
+    }
+
+    .slot-group h3 .mana-sym {
+      width: 14px;
+      height: 14px;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Compact Autocard Trigger */
+    .autocard {
+      display: inline-block;
+      color: var(--accent);
+      background: rgba(122, 162, 247, 0.08);
+      border: 1px solid rgba(122, 162, 247, 0.22);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 500;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .autocard:hover {
+      background: rgba(122, 162, 247, 0.2);
+      border-color: var(--accent);
+    }
+
+    /* Mana Symbol SVGs */
+    .pips {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mana-sym {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
+    }
+
+    /* Floating Card Image Popover */
+    #card-popover {
+      position: fixed;
+      z-index: 9999;
+      width: 260px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px) scale(0.98);
+      transition: opacity 0.08s ease, transform 0.08s ease;
+    }
+
+    #card-popover.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #pop-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 488 / 680;
+      border-radius: 12px;
+      background: #181b22;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>GWU Tap/Untap — Merfolk/Fey Batching & Pure Mechanics</h1>
+  <p class="subtitle">
+    Comparing GWU Tap/Untap with Fey Kindred Batching (Elves + Merfolk + Kithkin) vs. Pure Mechanical Tap/Untap. Hover any card name to view its image.
+  </p>
+
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}">
+        </span>
+        <span>GWU Tap/Untap — Variant 1: With &#x27;Fey&#x27; Batch (Elves + Merfolk + Kithkin)</span>
+      </h2>
+      <span class="verdict-pill">Huge Upgrade over RGW — Blue &amp; WU/GU fix every hole Red had</span>
+    </div>
+    <p class="theme-note">Batching Elves, Merfolk, and Kithkin as &#x27;Fey&#x27; bridges Ixalan/Lorwyn Merfolk (U, WU, GU) with Green/GW Elves. Dionus, Kumena, Merrow Reejerey, Deepchannel Duelist, Deepway Navigator, and Meanders Guide all scale off the entire batch, while Captain America and Wylie Duke reward every tap trigger regardless of creature type.</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Ornery Tumblewagg">Ornery Tumblewagg</span><span class="card-meta">G · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Dionus, Elvish Archdruid">Dionus, Elvish Archdruid</span><span class="card-meta">G · MV4 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Jaspera Sentinel">Jaspera Sentinel</span><span class="card-meta">G · MV1 · C</span></li>
+          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="card-meta">W · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Meanders Guide">Meanders Guide</span><span class="card-meta">W · MV3 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Warden of the Inner Sky">Warden of the Inner Sky</span><span class="card-meta">W · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Wanderbrine Trapper">Wanderbrine Trapper</span><span class="card-meta">W · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="card-meta">W · MV3 · R</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Mindspring Merfolk">Mindspring Merfolk</span><span class="card-meta">U · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Fallowsage">Fallowsage</span><span class="card-meta">U · MV4 · U</span></li>
+          <li><span class="autocard" data-card="Surgespanner">Surgespanner</span><span class="card-meta">U · MV4 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Gravelgill Scoundrel">Gravelgill Scoundrel</span><span class="card-meta">U · MV2 · C</span></li>
+          <li><span class="autocard" data-card="Forensic Researcher">Forensic Researcher</span><span class="card-meta">U · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Merrow Reejerey">Merrow Reejerey</span><span class="card-meta">U · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Emmara, Soul of the Accord">Emmara, Soul of the Accord</span><span class="card-meta">GW · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Captain America, Living Legend">Captain America, Living Legend</span><span class="card-meta">UW · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Kumena, Tyrant of Orazca">Kumena, Tyrant of Orazca</span><span class="card-meta">GU · MV3 · M</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}">
+        </span>
+        <span>GWU Tap/Untap — Variant 2: Pure Mechanics (No Kindred Batch Needed)</span>
+      </h2>
+      <span class="verdict-pill">Clean &amp; Zero Stickers — Uses self-contained Merfolk + Survival/Saddle</span>
+    </div>
+    <p class="theme-note">Even without type batching, many of the best Merfolk tap cards (Adept Watershaper, Wanderbrine Trapper, Fallowsage, Surgespanner, Pestered Wellguard, Forensic Researcher, Kiora&#x27;s Follower) don&#x27;t care about creature types at all. Pairing Blue&#x27;s tap/untap engines with GW&#x27;s Saddle and Survival cards gives a super cohesive mechanical identity.</p>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Ornery Tumblewagg">Ornery Tumblewagg</span><span class="card-meta">G · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Kona, Rescue Beastie">Kona, Rescue Beastie</span><span class="card-meta">G · MV4 · R</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="card-meta">G · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Rambling Possum">Rambling Possum</span><span class="card-meta">G · MV3 · U</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="card-meta">W · MV2 · R</span></li>
+          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Dawnstrike Vanguard">Dawnstrike Vanguard</span><span class="card-meta">W · MV6 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Warden of the Inner Sky">Warden of the Inner Sky</span><span class="card-meta">W · MV1 · R</span></li>
+          <li><span class="autocard" data-card="Wanderbrine Trapper">Wanderbrine Trapper</span><span class="card-meta">W · MV1 · U</span></li>
+          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="card-meta">W · MV3 · R</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Katara, Bending Prodigy">Katara, Bending Prodigy</span><span class="card-meta">U · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Pestered Wellguard">Pestered Wellguard</span><span class="card-meta">U · MV4 · U</span></li>
+          <li><span class="autocard" data-card="Fallowsage">Fallowsage</span><span class="card-meta">U · MV4 · U</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Gravelgill Scoundrel">Gravelgill Scoundrel</span><span class="card-meta">U · MV2 · C</span></li>
+          <li><span class="autocard" data-card="Forensic Researcher">Forensic Researcher</span><span class="card-meta">U · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Disruptor of Currents">Disruptor of Currents</span><span class="card-meta">U · MV5 · R</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Two-Color Signposts</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Wylie Duke, Atiin Hero">Wylie Duke, Atiin Hero</span><span class="card-meta">GW · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Captain America, Living Legend">Captain America, Living Legend</span><span class="card-meta">UW · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Kiora&#x27;s Follower">Kiora&#x27;s Follower</span><span class="card-meta">GU · MV2 · U</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Card Image Tooltip -->
+  <div id="card-popover" aria-hidden="true">
+    <img id="pop-img" alt="" />
+  </div>
+
+  <script>
+    const popover = document.getElementById("card-popover");
+    const popImg = document.getElementById("pop-img");
+
+    function slugify(name) {
+      return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function scryfallImgUrl(name) {
+      return `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(name)}&format=image&version=normal`;
+    }
+
+    document.querySelectorAll(".autocard").forEach(el => {
+      const name = el.dataset.card || el.textContent.trim();
+      const localPath = `cache/images/${slugify(name)}.jpg`;
+      const remoteUrl = scryfallImgUrl(name);
+
+      el.addEventListener("mouseenter", (e) => {
+        popImg.onerror = () => {
+          popImg.onerror = null;
+          popImg.src = remoteUrl;
+        };
+        popImg.src = localPath;
+        popImg.alt = name;
+        popover.classList.add("visible");
+        positionPopover(e);
+      });
+
+      el.addEventListener("mousemove", positionPopover);
+      el.addEventListener("mouseleave", () => {
+        popover.classList.remove("visible");
+      });
+    });
+
+    function positionPopover(e) {
+      const pad = 16;
+      const w = 260;
+      const h = 362;
+      let x = e.clientX + pad;
+      let y = e.clientY + pad;
+
+      if (x + w > window.innerWidth - 12) {
+        x = e.clientX - w - pad;
+      }
+      if (y + h > window.innerHeight - 12) {
+        y = window.innerHeight - h - 12;
+      }
+      popover.style.left = `${Math.max(12, x)}px`;
+      popover.style.top = `${Math.max(12, y)}px`;
+    }
+  </script>
+</body>
+</html>

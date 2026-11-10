@@ -34,11 +34,9 @@ Open question: what about clues, treasures, etc? I'm inclined against them, but 
 
 ## Land Tutors
 
-I'm pretty skeptical of any search/shuffle effects. They slow down the game a lot. My starting point is to exclude them entirely from the cube. 
+I'm pretty skeptical of any search/shuffle effects. They slow down the game a lot. That all said, I have observed that WOTC has put a *lot* of land tutors in recent sets -- landers, [[Evolving Wilds]], landcycling, etc. And these same sets seem to rate highly among players. Maybe mana screw is worse than shuffling. 
 
-Notably, this does *not* kill ramp and multicolor decks. We've still got a decent bench including [[Explore]], [[Clifftop Lookout]], [[Zimone's Experiment]], etc. 
-
-That all said, I have observed that WOTC has put a *lot* of land tutors in recent sets -- landers, [[Evolving Wilds]], landcycling, etc. And these same sets seem to rate highly among players. Maybe mana screw is worse than shuffling. 
+Don't include a search/shuffle effect if there's a similar card without the shuffle. For example, always play [[Clifftop Lookout]] over [[Wood Elves]]. But I think we can tolerate searching for basic lands on a small number of unique attractive cards. 
 
 ## Counters
 
