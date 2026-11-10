@@ -46,7 +46,7 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 16px 20px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .theme-header {
@@ -85,6 +85,10 @@
       gap: 5px;
     }
 
+    .slot-group h3.sub-role {
+      margin-top: 12px;
+    }
+
     .slot-group h3 .mana-sym {
       width: 14px;
       height: 14px;
@@ -97,6 +101,51 @@
       display: flex;
       flex-direction: column;
       gap: 5px;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    /* 17Lands Letter Grade Badges */
+    .grade-badge {
+      display: inline-block;
+      min-width: 22px;
+      text-align: center;
+      padding: 0px 4px;
+      border-radius: 4px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      cursor: help;
+    }
+    .grade-sweet {
+      color: #c3e88d;
+      background: rgba(195, 232, 141, 0.14);
+      border: 1px solid rgba(195, 232, 141, 0.35);
+    }
+    .grade-mid {
+      color: #82aaff;
+      background: rgba(130, 170, 255, 0.12);
+      border: 1px solid rgba(130, 170, 255, 0.3);
+    }
+    .grade-bomb {
+      color: #ffcb6b;
+      background: rgba(255, 203, 107, 0.16);
+      border: 1px solid rgba(255, 203, 107, 0.4);
+    }
+    .grade-dud {
+      color: #f07178;
+      background: rgba(240, 113, 120, 0.15);
+      border: 1px solid rgba(240, 113, 120, 0.38);
+    }
+    .grade-na {
+      color: #676e95;
+      background: rgba(103, 110, 149, 0.12);
+      border: 1px solid rgba(103, 110, 149, 0.25);
     }
 
     /* Compact Autocard Trigger */
@@ -168,7 +217,7 @@
 
   <h1>Uncommons Cube — Autocard Demo</h1>
   <p class="subtitle">
-    Hover any card name to display its card image (loads locally from <code>cache/images/</code> when cached, or falls back to Scryfall).
+    Hover any card name to display its card image (loads locally from <code>cache/images/</code> when cached, or falls back to Scryfall), or hover its letter grade for 17Lands stats.
   </p>
 
   <div class="theme-card">
@@ -179,7 +228,7 @@
           <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}">
           <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
         </span>
-        <span>Discard (Madness / Mayhem)</span>
+        <span>Cycling &amp; Discard — Loot, Rummage &amp; Draw-Two</span>
       </h2>
     </div>
 
@@ -187,36 +236,54 @@
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Scrounging Skyray">Scrounging Skyray</span></li>
-          <li><span class="autocard" data-card="Circular Logic">Circular Logic</span></li>
-          <li><span class="autocard" data-card="Ominous Sphinx">Ominous Sphinx</span></li>
+          <li><span class="autocard" data-card="Scrounging Skyray">Scrounging Skyray</span><span class="grade-badge grade-sweet" title="17Lands [DFT]: B (58.4% GIH WR)">B</span></li>
+          <li><span class="autocard" data-card="Circular Logic">Circular Logic</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Ominous Sphinx">Ominous Sphinx</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Hard Evidence">Hard Evidence</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Ghostly Pilferer">Ghostly Pilferer</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Hieroglyphic Illumination">Hieroglyphic Illumination</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Asylum Visitor">Asylum Visitor</span></li>
-          <li><span class="autocard" data-card="Gisa's Bidding">Gisa's Bidding</span></li>
-          <li><span class="autocard" data-card="Big Game Hunter">Big Game Hunter</span></li>
+          <li><span class="autocard" data-card="Asylum Visitor">Asylum Visitor</span><span class="grade-badge grade-mid" title="17Lands [SIR]: C (54.4% GIH WR)">C</span></li>
+          <li><span class="autocard" data-card="Gisa's Bidding">Gisa's Bidding</span><span class="grade-badge grade-sweet" title="17Lands [SIR]: B- (57.3% GIH WR)">B-</span></li>
+          <li><span class="autocard" data-card="Big Game Hunter">Big Game Hunter</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Heir of Falkenrath">Heir of Falkenrath</span><span class="grade-badge grade-sweet" title="17Lands [SIR]: B+ (59.5% GIH WR)">B+</span></li>
+          <li><span class="autocard" data-card="Archfiend of Ifnir">Archfiend of Ifnir</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Vile Entomber">Vile Entomber</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Marauding Mako">Marauding Mako</span></li>
-          <li><span class="autocard" data-card="Fiery Temper">Fiery Temper</span></li>
-          <li><span class="autocard" data-card="Raging Goblinoids">Raging Goblinoids</span></li>
+          <li><span class="autocard" data-card="Marauding Mako">Marauding Mako</span><span class="grade-badge grade-mid" title="17Lands [DFT]: C+ (56.3% GIH WR)">C+</span></li>
+          <li><span class="autocard" data-card="Fiery Temper">Fiery Temper</span><span class="grade-badge grade-sweet" title="17Lands [SIR]: B+ (59.6% GIH WR)">B+</span></li>
+          <li><span class="autocard" data-card="Raging Goblinoids">Raging Goblinoids</span><span class="grade-badge grade-mid" title="17Lands [OM1]: C+ (56.4% GIH WR)">C+</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Inti, Seneschal of the Sun">Inti, Seneschal of the Sun</span><span class="grade-badge grade-sweet" title="17Lands [LCI]: A- (62.0% GIH WR)">A-</span></li>
+          <li><span class="autocard" data-card="Faithless Looting">Faithless Looting</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Bitter Reunion">Bitter Reunion</span><span class="grade-badge grade-mid" title="17Lands [BRO]: C (55.0% GIH WR)">C</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
-        <h3>Two-Color</h3>
+        <h3>Two-Color Signposts</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Terminal Agony">Terminal Agony</span></li>
-          <li><span class="autocard" data-card="Lazotep Chancellor">Lazotep Chancellor</span></li>
-          <li><span class="autocard" data-card="Izzet Charm">Izzet Charm</span></li>
+          <li><span class="autocard" data-card="Lazotep Chancellor">Lazotep Chancellor</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Terminal Agony">Terminal Agony</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data">—</span></li>
+          <li><span class="autocard" data-card="Captain Howler, Sea Scourge">Captain Howler, Sea Scourge</span><span class="grade-badge grade-sweet" title="17Lands [DFT]: A- (61.3% GIH WR)">A-</span></li>
         </ul>
       </div>
     </div>

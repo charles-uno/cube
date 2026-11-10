@@ -53,9 +53,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
@@ -67,22 +65,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .verdict-pill {
-      font-size: 0.75rem;
-      color: #c3e88d;
-      background: rgba(195, 232, 141, 0.1);
-      border: 1px solid rgba(195, 232, 141, 0.28);
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-weight: 500;
-    }
-
-    .theme-note {
-      color: var(--muted);
-      font-size: 0.84rem;
-      margin: 0 0 14px;
     }
 
     /* Always 4 columns side-by-side */
@@ -128,11 +110,42 @@
       gap: 6px;
     }
 
-    .card-meta {
-      font-size: 0.7rem;
-      color: var(--muted);
-      white-space: nowrap;
+    /* 17Lands Letter Grade Badges */
+    .grade-badge {
+      display: inline-block;
+      min-width: 22px;
+      text-align: center;
+      padding: 0px 4px;
+      border-radius: 4px;
+      font-size: 0.66rem;
+      font-weight: 700;
       flex-shrink: 0;
+      cursor: help;
+    }
+    .grade-sweet {
+      color: #c3e88d;
+      background: rgba(195, 232, 141, 0.14);
+      border: 1px solid rgba(195, 232, 141, 0.35);
+    }
+    .grade-mid {
+      color: #82aaff;
+      background: rgba(130, 170, 255, 0.12);
+      border: 1px solid rgba(130, 170, 255, 0.3);
+    }
+    .grade-bomb {
+      color: #ffcb6b;
+      background: rgba(255, 203, 107, 0.16);
+      border: 1px solid rgba(255, 203, 107, 0.4);
+    }
+    .grade-dud {
+      color: #f07178;
+      background: rgba(240, 113, 120, 0.15);
+      border: 1px solid rgba(240, 113, 120, 0.38);
+    }
+    .grade-na {
+      color: #676e95;
+      background: rgba(103, 110, 149, 0.12);
+      border: 1px solid rgba(103, 110, 149, 0.25);
     }
 
     /* Compact Autocard Trigger */
@@ -202,9 +215,9 @@
 </head>
 <body>
 
-  <h1>GWU Tap/Untap — Merfolk/Fey Batching & Pure Mechanics</h1>
+  <h1>GWU Tap/Untap — Merfolk/Fey Batching &amp; Pure Mechanics</h1>
   <p class="subtitle">
-    Comparing GWU Tap/Untap with Fey Kindred Batching (Elves + Merfolk + Kithkin) vs. Pure Mechanical Tap/Untap. Hover any card name to view its image.
+    Hover any card name to display its card image (loads locally from <code>cache/images/</code> when cached, or falls back to Scryfall), or hover its letter grade for 17Lands stats.
   </p>
 
   <div class="theme-card">
@@ -217,62 +230,60 @@
         </span>
         <span>GWU Tap/Untap — Variant 1: With &#x27;Fey&#x27; Batch (Elves + Merfolk + Kithkin)</span>
       </h2>
-      <span class="verdict-pill">Huge Upgrade over RGW — Blue &amp; WU/GU fix every hole Red had</span>
     </div>
-    <p class="theme-note">Batching Elves, Merfolk, and Kithkin as &#x27;Fey&#x27; bridges Ixalan/Lorwyn Merfolk (U, WU, GU) with Green/GW Elves. Dionus, Kumena, Merrow Reejerey, Deepchannel Duelist, Deepway Navigator, and Meanders Guide all scale off the entire batch, while Captain America and Wylie Duke reward every tap trigger regardless of creature type.</p>
 
     <div class="skeleton-grid">
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="card-meta">G · MV1 · U</span></li>
-          <li><span class="autocard" data-card="Ornery Tumblewagg">Ornery Tumblewagg</span><span class="card-meta">G · MV3 · R</span></li>
-          <li><span class="autocard" data-card="Dionus, Elvish Archdruid">Dionus, Elvish Archdruid</span><span class="card-meta">G · MV4 · U</span></li>
+          <li><span class="autocard" data-card="Traveling Botanist">Traveling Botanist</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B (58.9% GIH WR, n=72549) | In-theme pairs: UG: B- (59.1%)">B</span></li>
+          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="grade-badge grade-mid" title="17Lands [EOE]: C- (53.6% GIH WR, n=17707) | In-theme pairs: UG: D (53.3%), WG: C (55.4%)">C-</span></li>
+          <li><span class="autocard" data-card="Dionus, Elvish Archdruid">Dionus, Elvish Archdruid</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
         </ul>
         <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="card-meta">G · MV1 · U</span></li>
-          <li><span class="autocard" data-card="Jaspera Sentinel">Jaspera Sentinel</span><span class="card-meta">G · MV1 · C</span></li>
-          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Jaspera Sentinel">Jaspera Sentinel</span><span class="grade-badge grade-sweet" title="17Lands [KHM]: B- (58.0% GIH WR, n=60564) | In-theme pairs: UG: C+ (57.3%), WG: C+ (58.8%)">B-</span></li>
+          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="grade-badge grade-mid" title="17Lands [DSK]: C (55.7% GIH WR, n=49787) | In-theme pairs: UG: C (57.3%), WG: C+ (54.0%)">C</span></li>
+          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="grade-badge grade-mid" title="17Lands [OM1]: C (56.2% GIH WR, n=19090) | In-theme pairs: WG: C (58.3%)">C</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="card-meta">W · MV2 · R</span></li>
-          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="card-meta">W · MV3 · R</span></li>
-          <li><span class="autocard" data-card="Meanders Guide">Meanders Guide</span><span class="card-meta">W · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="grade-badge grade-sweet" title="17Lands [EOE]: A- (60.7% GIH WR, n=24634) | In-theme pairs: WG: A (61.7%), WU: A- (61.1%)">A-</span></li>
+          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="grade-badge grade-sweet" title="17Lands [ECL]: B- (57.9% GIH WR, n=17414) | In-theme pairs: WG: B (58.7%), WU: B (58.9%)">B-</span></li>
+          <li><span class="autocard" data-card="Meanders Guide">Meanders Guide</span><span class="grade-badge grade-mid" title="17Lands [ECL]: C- (54.1% GIH WR, n=28069) | In-theme pairs: WG: D (52.3%), WU: C- (54.9%)">C-</span></li>
         </ul>
         <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Warden of the Inner Sky">Warden of the Inner Sky</span><span class="card-meta">W · MV1 · R</span></li>
-          <li><span class="autocard" data-card="Wanderbrine Trapper">Wanderbrine Trapper</span><span class="card-meta">W · MV1 · U</span></li>
-          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Wanderbrine Trapper">Wanderbrine Trapper</span><span class="grade-badge grade-sweet" title="17Lands [ECL]: B (59.5% GIH WR, n=48122) | In-theme pairs: WG: B (59.6%), WU: B+ (60.3%)">B</span></li>
+          <li><span class="autocard" data-card="Collective Effort">Collective Effort</span><span class="grade-badge grade-sweet" title="17Lands [SIR]: B (58.6% GIH WR, n=4290) | In-theme pairs: WG: B (59.9%), WU: B- (58.7%)">B</span></li>
+          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="grade-badge grade-sweet" title="17Lands [OTJ]: B (57.8% GIH WR, n=28883) | In-theme pairs: WG: B- (58.9%), WU: B (56.0%)">B</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Mindspring Merfolk">Mindspring Merfolk</span><span class="card-meta">U · MV1 · R</span></li>
-          <li><span class="autocard" data-card="Fallowsage">Fallowsage</span><span class="card-meta">U · MV4 · U</span></li>
-          <li><span class="autocard" data-card="Surgespanner">Surgespanner</span><span class="card-meta">U · MV4 · R</span></li>
+          <li><span class="autocard" data-card="Mindspring Merfolk">Mindspring Merfolk</span><span class="grade-badge grade-sweet" title="17Lands [DFT]: B+ (59.7% GIH WR, n=28801) | In-theme pairs: UG: A- (61.5%), WU: B+ (59.5%)">B+</span></li>
+          <li><span class="autocard" data-card="Fallowsage">Fallowsage</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Surgespanner">Surgespanner</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
         </ul>
         <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Gravelgill Scoundrel">Gravelgill Scoundrel</span><span class="card-meta">U · MV2 · C</span></li>
-          <li><span class="autocard" data-card="Forensic Researcher">Forensic Researcher</span><span class="card-meta">U · MV3 · U</span></li>
-          <li><span class="autocard" data-card="Merrow Reejerey">Merrow Reejerey</span><span class="card-meta">U · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Gravelgill Scoundrel">Gravelgill Scoundrel</span><span class="grade-badge grade-mid" title="17Lands [ECL]: C (55.8% GIH WR, n=80474) | In-theme pairs: UG: D- (49.2%), WU: C (56.4%)">C</span></li>
+          <li><span class="autocard" data-card="Forensic Researcher">Forensic Researcher</span><span class="grade-badge grade-mid" title="17Lands [MKM]: C (55.0% GIH WR, n=47945) | In-theme pairs: UG: C (57.1%), WU: C (53.8%)">C</span></li>
+          <li><span class="autocard" data-card="Merrow Reejerey">Merrow Reejerey</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3>Two-Color Signposts</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Emmara, Soul of the Accord">Emmara, Soul of the Accord</span><span class="card-meta">GW · MV2 · R</span></li>
-          <li><span class="autocard" data-card="Captain America, Living Legend">Captain America, Living Legend</span><span class="card-meta">UW · MV3 · U</span></li>
-          <li><span class="autocard" data-card="Kumena, Tyrant of Orazca">Kumena, Tyrant of Orazca</span><span class="card-meta">GU · MV3 · M</span></li>
+          <li><span class="autocard" data-card="Emmara, Soul of the Accord">Emmara, Soul of the Accord</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Captain America, Living Legend">Captain America, Living Legend</span><span class="grade-badge grade-mid" title="17Lands [MSH]: C+ (57.5% GIH WR, n=40157) | In-theme pairs: WG: D- (51.4%), WU: C+ (58.9%)">C+</span></li>
+          <li><span class="autocard" data-card="Kumena, Tyrant of Orazca">Kumena, Tyrant of Orazca</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
         </ul>
       </div>
     </div>
@@ -287,62 +298,60 @@
         </span>
         <span>GWU Tap/Untap — Variant 2: Pure Mechanics (No Kindred Batch Needed)</span>
       </h2>
-      <span class="verdict-pill">Clean &amp; Zero Stickers — Uses self-contained Merfolk + Survival/Saddle</span>
     </div>
-    <p class="theme-note">Even without type batching, many of the best Merfolk tap cards (Adept Watershaper, Wanderbrine Trapper, Fallowsage, Surgespanner, Pestered Wellguard, Forensic Researcher, Kiora&#x27;s Follower) don&#x27;t care about creature types at all. Pairing Blue&#x27;s tap/untap engines with GW&#x27;s Saddle and Survival cards gives a super cohesive mechanical identity.</p>
 
     <div class="skeleton-grid">
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="card-meta">G · MV1 · U</span></li>
-          <li><span class="autocard" data-card="Ornery Tumblewagg">Ornery Tumblewagg</span><span class="card-meta">G · MV3 · R</span></li>
-          <li><span class="autocard" data-card="Kona, Rescue Beastie">Kona, Rescue Beastie</span><span class="card-meta">G · MV4 · R</span></li>
+          <li><span class="autocard" data-card="Traveling Botanist">Traveling Botanist</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B (58.9% GIH WR, n=72549) | In-theme pairs: UG: B- (59.1%)">B</span></li>
+          <li><span class="autocard" data-card="Stubborn Burrowfiend">Stubborn Burrowfiend</span><span class="grade-badge grade-sweet" title="17Lands [OTJ]: B (57.9% GIH WR, n=88495) | In-theme pairs: UG: C (56.1%), WG: B- (59.2%)">B</span></li>
+          <li><span class="autocard" data-card="Hemosymbic Mite">Hemosymbic Mite</span><span class="grade-badge grade-mid" title="17Lands [EOE]: C- (53.6% GIH WR, n=17707) | In-theme pairs: UG: D (53.3%), WG: C (55.4%)">C-</span></li>
         </ul>
         <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="card-meta">G · MV1 · U</span></li>
-          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="card-meta">G · MV3 · U</span></li>
-          <li><span class="autocard" data-card="Rambling Possum">Rambling Possum</span><span class="card-meta">G · MV3 · U</span></li>
+          <li><span class="autocard" data-card="Coordinated Clobbering">Coordinated Clobbering</span><span class="grade-badge grade-mid" title="17Lands [DSK]: C (55.7% GIH WR, n=49787) | In-theme pairs: UG: C (57.3%), WG: C+ (54.0%)">C</span></li>
+          <li><span class="autocard" data-card="Supportive Parents">Supportive Parents</span><span class="grade-badge grade-mid" title="17Lands [OM1]: C (56.2% GIH WR, n=19090) | In-theme pairs: WG: C (58.3%)">C</span></li>
+          <li><span class="autocard" data-card="Rambling Possum">Rambling Possum</span><span class="grade-badge grade-mid" title="17Lands [OTJ]: C (54.7% GIH WR, n=64661) | In-theme pairs: UG: D+ (54.5%), WG: C (56.8%)">C</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="card-meta">W · MV2 · R</span></li>
-          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="card-meta">W · MV3 · R</span></li>
-          <li><span class="autocard" data-card="Dawnstrike Vanguard">Dawnstrike Vanguard</span><span class="card-meta">W · MV6 · U</span></li>
+          <li><span class="autocard" data-card="Sunstar Chaplain">Sunstar Chaplain</span><span class="grade-badge grade-sweet" title="17Lands [EOE]: A- (60.7% GIH WR, n=24634) | In-theme pairs: WG: A (61.7%), WU: A- (61.1%)">A-</span></li>
+          <li><span class="autocard" data-card="The Wandering Rescuer">The Wandering Rescuer</span><span class="grade-badge grade-sweet" title="17Lands [DSK]: B (58.9% GIH WR, n=12587) | In-theme pairs: WG: B- (55.1%), WU: B (60.6%)">B</span></li>
+          <li><span class="autocard" data-card="Adept Watershaper">Adept Watershaper</span><span class="grade-badge grade-sweet" title="17Lands [ECL]: B- (57.9% GIH WR, n=17414) | In-theme pairs: WG: B (58.7%), WU: B (58.9%)">B-</span></li>
         </ul>
         <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Warden of the Inner Sky">Warden of the Inner Sky</span><span class="card-meta">W · MV1 · R</span></li>
-          <li><span class="autocard" data-card="Wanderbrine Trapper">Wanderbrine Trapper</span><span class="card-meta">W · MV1 · U</span></li>
-          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="card-meta">W · MV3 · R</span></li>
+          <li><span class="autocard" data-card="Wanderbrine Trapper">Wanderbrine Trapper</span><span class="grade-badge grade-sweet" title="17Lands [ECL]: B (59.5% GIH WR, n=48122) | In-theme pairs: WG: B (59.6%), WU: B+ (60.3%)">B</span></li>
+          <li><span class="autocard" data-card="Collective Effort">Collective Effort</span><span class="grade-badge grade-sweet" title="17Lands [SIR]: B (58.6% GIH WR, n=4290) | In-theme pairs: WG: B (59.9%), WU: B- (58.7%)">B</span></li>
+          <li><span class="autocard" data-card="Fortune, Loyal Steed">Fortune, Loyal Steed</span><span class="grade-badge grade-sweet" title="17Lands [OTJ]: B (57.8% GIH WR, n=28883) | In-theme pairs: WG: B- (58.9%), WU: B (56.0%)">B</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Katara, Bending Prodigy">Katara, Bending Prodigy</span><span class="card-meta">U · MV3 · U</span></li>
-          <li><span class="autocard" data-card="Pestered Wellguard">Pestered Wellguard</span><span class="card-meta">U · MV4 · U</span></li>
-          <li><span class="autocard" data-card="Fallowsage">Fallowsage</span><span class="card-meta">U · MV4 · U</span></li>
+          <li><span class="autocard" data-card="Unctus, Grand Metatect">Unctus, Grand Metatect</span><span class="grade-badge grade-sweet" title="17Lands [ONE]: B (58.9% GIH WR, n=12634) | In-theme pairs: UG: B (57.0%), WU: A (62.4%)">B</span></li>
+          <li><span class="autocard" data-card="Gran-Gran">Gran-Gran</span><span class="grade-badge grade-sweet" title="17Lands [TLA]: B (59.3% GIH WR, n=67072) | In-theme pairs: UG: C+ (56.8%), WU: B (59.9%)">B</span></li>
+          <li><span class="autocard" data-card="Fallowsage">Fallowsage</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
         </ul>
         <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Gravelgill Scoundrel">Gravelgill Scoundrel</span><span class="card-meta">U · MV2 · C</span></li>
-          <li><span class="autocard" data-card="Forensic Researcher">Forensic Researcher</span><span class="card-meta">U · MV3 · U</span></li>
-          <li><span class="autocard" data-card="Disruptor of Currents">Disruptor of Currents</span><span class="card-meta">U · MV5 · R</span></li>
+          <li><span class="autocard" data-card="Disruptor of Currents">Disruptor of Currents</span><span class="grade-badge grade-sweet" title="17Lands [ECL]: A- (61.2% GIH WR, n=22012) | In-theme pairs: UG: B- (55.1%), WU: A (62.3%)">A-</span></li>
+          <li><span class="autocard" data-card="Gravelgill Scoundrel">Gravelgill Scoundrel</span><span class="grade-badge grade-mid" title="17Lands [ECL]: C (55.8% GIH WR, n=80474) | In-theme pairs: UG: D- (49.2%), WU: C (56.4%)">C</span></li>
+          <li><span class="autocard" data-card="Forensic Researcher">Forensic Researcher</span><span class="grade-badge grade-mid" title="17Lands [MKM]: C (55.0% GIH WR, n=47945) | In-theme pairs: UG: C (57.1%), WU: C (53.8%)">C</span></li>
         </ul>
       </div>
 
       <div class="slot-group">
         <h3>Two-Color Signposts</h3>
         <ul class="card-list">
-          <li><span class="autocard" data-card="Wylie Duke, Atiin Hero">Wylie Duke, Atiin Hero</span><span class="card-meta">GW · MV3 · R</span></li>
-          <li><span class="autocard" data-card="Captain America, Living Legend">Captain America, Living Legend</span><span class="card-meta">UW · MV3 · U</span></li>
-          <li><span class="autocard" data-card="Kiora&#x27;s Follower">Kiora&#x27;s Follower</span><span class="card-meta">GU · MV2 · U</span></li>
+          <li><span class="autocard" data-card="Wylie Duke, Atiin Hero">Wylie Duke, Atiin Hero</span><span class="grade-badge grade-sweet" title="17Lands [OTJ]: B+ (59.9% GIH WR, n=27837) | In-theme pairs: WG: A- (62.2%)">B+</span></li>
+          <li><span class="autocard" data-card="Captain America, Living Legend">Captain America, Living Legend</span><span class="grade-badge grade-mid" title="17Lands [MSH]: C+ (57.5% GIH WR, n=40157) | In-theme pairs: WG: D- (51.4%), WU: C+ (58.9%)">C+</span></li>
+          <li><span class="autocard" data-card="Kiora&#x27;s Follower">Kiora&#x27;s Follower</span><span class="grade-badge grade-dud" title="17Lands [PIO]: D+ (54.4% GIH WR, n=9587) | In-theme pairs: UG: C+ (55.2%)">D+</span></li>
         </ul>
       </div>
     </div>
@@ -371,6 +380,7 @@
       const remoteUrl = scryfallImgUrl(name);
 
       el.addEventListener("mouseenter", (e) => {
+        // Try local cached image first (for 100% offline use); seamlessly fall back to Scryfall
         popImg.onerror = () => {
           popImg.onerror = null;
           popImg.src = remoteUrl;

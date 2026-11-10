@@ -22,11 +22,12 @@ We can use 17lands.com to eyeball power level. It provides card-by-card power ra
 
 Data: https://www.17lands.com/public_datasets
 
-Two big disclaimers about using this data:
+A few big disclaimers about using this data:
 - Data comes from drafts. Cards are played only within their set. Careful with comparisons across sets.
 - Power level may depend on theme support. Cube themes are often different from draft themes. 
 - Draft environments are often skewed in terms of color. For example, red cards in MSH rank poorly red was weak in that format overall. Individual red cards may still be usable.
 - Not all cards have data! Commander sets don't get drafted, but we still have access to those cards
+- The absolute numbers are meaningless! Don't bother quoting them. The actual average win rate should be exactly 50%, but the average in this data is closer to 55%. Stick with the letter grades
 
 We should steer clear of anything rated A+ or A. Those cards are likely bombs that can run away with a game on their own, independent of theme support. 
 
