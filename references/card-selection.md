@@ -16,8 +16,6 @@ Universes Beyond *are* allowed
 
 MTG is a big game with decades of expansions (and baggage). We are mindful about what we include and exclude. Right now that looks like:
 
-- Creatures, lands, instants, and sorceries. No noncreature nonland permanents (equipment, sagas, planeswalkers, etc). Enchantment creatures *are* allowed, but their enchantment type is irrelevant
-- Charge counters on lands, +1/+1 counters on creatures. No other counters
 - No searching libraries. It slows down games too much. This includes basic lands
 - No double-faced cards. Bad for draft logistics
 - No control effects. No effects that exile your card on my side of the table (eg [[Fiend Hunter]]). Easy to accidentally switch cards between decks
@@ -33,6 +31,12 @@ MTG is a big game with decades of expansions (and baggage). We are mindful about
 We may tweak this over time. But for the moment, these are hard rules. 
 
 Open question: what about clues, treasures, etc? I'm inclined against them, but could be swayed
+
+## Counters
+
+Draft formats typically do not mix +1/+1 counters and -1/-1 counters in the same set. We abide by that rule. The cube includes +1/+1 counters and excludes any card that uses -1/-1 counters.
+
+We could be open to relaxing this rule if there were a handful of cards that made -1/-1 counters attractive.
 
 ## Card Types
 
