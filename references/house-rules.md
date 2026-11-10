@@ -17,9 +17,9 @@ These types are not set in stone. The important thing is that they are all the s
 
 Zombie kindred is allowed as a theme, but it is not required. Same for the other token types.
 
-Open question: what about other tokens? There are plenty of ways to produce 2/1, 3/2, tokens with vigilance, tokens with lifelink, etc. In short, we have room for another one or two types of token. But I would be hesitant to add a token type to support just a single card that produces it. 
+Open question: should we treat 1/1 artifact tokens (servo, gnome, etc) different from 1/1 nonartifact tokens (elf, goblin, etc)? Clumping them together can lead to some weird flavors.
 
-Open question: do we treat Amass 1 like a 1/1 token, Amass 2 like a 2/2 token, etc? Or do we use the Army token as printed? We could go either way based on what better lines up with the themes (eg, whether +1/+1 counters are on-theme for these colors)
+Open question: what about other tokens? There are plenty of ways to produce 2/1, 3/2, tokens with vigilance, tokens with lifelink, etc. In short, we have room for another one or two types of token. But I would be hesitant to add a token type to support just a single card that produces it. 
 
 ### Kindred Batches
 
