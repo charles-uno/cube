@@ -34,6 +34,16 @@ We may tweak this over time. But for the moment, these are hard rules.
 
 Open question: what about clues, treasures, etc? I'm inclined against them, but could be swayed
 
+## Card Types
+
+[[Disenchant]] effects are typically weak in draft. They're dead draws most of the time. Then, once in a while, you get blown out by an artifact or enchantment that you have no way to interact with. To me, that's bad tension. 
+
+At present, we just skip them. The cube includes only creatures, sorceries, instants, and lands. No planeswalkers, no sagas, no auras, no mana rocks. Artifact creatures and enchantment creatures are allowed. 
+
+I would not hate to change this, but we need to be honest about what that means. We can't just add a single mana rock or equipment. We would need: 
+- Enough noncreature artifacts/enchantments for [[Disenchant]] effects to be plausible picks during the draft
+- Enough [[Disenchant]] effects to ensure reasonable access
+
 ## Token Paperwork
 
 In principle, any sort of creature token is allowed. However, let's do our best to limit the *total* number of creature tokens. 

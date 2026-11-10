@@ -41,6 +41,7 @@ Here are some themes that have showed up in recent sets. This is a starting poin
 - Drawing extra cards
 - Legendary/historic
 - Ramp -- landfall, mana value matters
+- Equipment
 - +1/+1 Counters -- I don't love this one, honestly, since counters are a common bookkeeping tool across all colors. But there is plenty of support if we need it
 - Graveyard. Wary of this one since I think it's tedious if players have to babysit each others' graveyards
 
