@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build-Around Enchantments & Open Triad Avenues</title>
+  <style>
+    :root {
+      --bg: #121418;
+      --surface: #1b1f27;
+      --border: #2e3543;
+      --text: #e6e9ef;
+      --muted: #9aa2b1;
+      --accent: #7aa2f7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 24px 80px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      max-width: 1080px;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+    }
+
+    .theme-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+
+    .theme-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .theme-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Always 4 columns side-by-side */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .slot-group h3 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .slot-group h3.sub-role {
+      margin-top: 12px;
+    }
+
+    .slot-group h3 .mana-sym {
+      width: 14px;
+      height: 14px;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    /* 17Lands Letter Grade Badges */
+    .grade-badge {
+      display: inline-block;
+      min-width: 22px;
+      text-align: center;
+      padding: 0px 4px;
+      border-radius: 4px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      cursor: help;
+    }
+    .grade-sweet {
+      color: #c3e88d;
+      background: rgba(195, 232, 141, 0.14);
+      border: 1px solid rgba(195, 232, 141, 0.35);
+    }
+    .grade-mid {
+      color: #82aaff;
+      background: rgba(130, 170, 255, 0.12);
+      border: 1px solid rgba(130, 170, 255, 0.3);
+    }
+    .grade-bomb {
+      color: #ffcb6b;
+      background: rgba(255, 203, 107, 0.16);
+      border: 1px solid rgba(255, 203, 107, 0.4);
+    }
+    .grade-dud {
+      color: #f07178;
+      background: rgba(240, 113, 120, 0.15);
+      border: 1px solid rgba(240, 113, 120, 0.38);
+    }
+    .grade-na {
+      color: #676e95;
+      background: rgba(103, 110, 149, 0.12);
+      border: 1px solid rgba(103, 110, 149, 0.25);
+    }
+
+    /* Compact Autocard Trigger */
+    .autocard {
+      display: inline-block;
+      color: var(--accent);
+      background: rgba(122, 162, 247, 0.08);
+      border: 1px solid rgba(122, 162, 247, 0.22);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 500;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .autocard:hover {
+      background: rgba(122, 162, 247, 0.2);
+      border-color: var(--accent);
+    }
+
+    /* Mana Symbol SVGs */
+    .pips {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mana-sym {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
+    }
+
+    /* Floating Card Image Popover */
+    #card-popover {
+      position: fixed;
+      z-index: 9999;
+      width: 260px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px) scale(0.98);
+      transition: opacity 0.08s ease, transform 0.08s ease;
+    }
+
+    #card-popover.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #pop-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 488 / 680;
+      border-radius: 12px;
+      background: #181b22;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Build-Around Enchantments &amp; Open Triad Avenues</h1>
+  <p class="subtitle">
+    Hover any card name to display its card image, or hover its letter grade for 17Lands stats.
+  </p>
+
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+        </span>
+        <span>Avenue A (RGW): Creaturefall (&#x27;Whenever a Creature Enters&#x27;) + Warleader&#x27;s Call</span>
+      </h2>
+    </div>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="General Kreat, the Boltbringer">General Kreat, the Boltbringer</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Molten Gatekeeper">Molten Gatekeeper</span><span class="grade-badge grade-mid" title="17Lands [MH3]: C (54.3% GIH WR, n=82783) | In-theme pairs: RG: D+ (56.1%), WR: C- (55.8%)">C</span></li>
+          <li><span class="autocard" data-card="Searslicer Goblin">Searslicer Goblin</span><span class="grade-badge grade-sweet" title="17Lands [FDN]: A- (60.4% GIH WR, n=22875) | In-theme pairs: RG: A- (60.7%), WR: A (60.5%)">A-</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Song of Totentanz">Song of Totentanz</span><span class="grade-badge grade-sweet" title="17Lands [WOE]: B (59.0% GIH WR, n=24197) | In-theme pairs: RG: B- (57.6%), WR: B+ (59.7%)">B</span></li>
+          <li><span class="autocard" data-card="Mogg War Marshal">Mogg War Marshal</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Stadium Headliner">Stadium Headliner</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B (58.5% GIH WR, n=22140) | In-theme pairs: WR: A- (61.8%)">B</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Champion of Lambholt">Champion of Lambholt</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Gala Greeters">Gala Greeters</span><span class="grade-badge grade-sweet" title="17Lands [SNC]: B (58.5% GIH WR, n=14051) | In-theme pairs: RG: B (56.0%), WG: B- (59.6%)">B</span></li>
+          <li><span class="autocard" data-card="Prosperous Innkeeper">Prosperous Innkeeper</span><span class="grade-badge grade-sweet" title="17Lands [AFR]: B (58.4% GIH WR, n=21712) | In-theme pairs: RG: C (54.9%), WG: A- (61.0%)">B</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Pawpatch Recruit">Pawpatch Recruit</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B+ (59.6% GIH WR, n=25540) | In-theme pairs: RG: B- (56.0%), WG: A- (61.2%)">B+</span></li>
+          <li><span class="autocard" data-card="Tough Cookie">Tough Cookie</span><span class="grade-badge grade-sweet" title="17Lands [WOE]: A- (60.6% GIH WR, n=77729) | In-theme pairs: RG: A- (60.9%), WG: A- (60.2%)">A-</span></li>
+          <li><span class="autocard" data-card="audacity">audacity</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Rabble Rousing">Rabble Rousing</span><span class="grade-badge grade-sweet" title="17Lands [SNC]: A- (61.4% GIH WR, n=18817) | In-theme pairs: WG: A (65.3%)">A-</span></li>
+          <li><span class="autocard" data-card="Skyknight Squire">Skyknight Squire</span><span class="grade-badge grade-sweet" title="17Lands [FDN]: B+ (58.9% GIH WR, n=23061) | In-theme pairs: WG: B+ (58.9%), WR: A- (60.5%)">B+</span></li>
+          <li><span class="autocard" data-card="Tocasia&#x27;s Welcome">Tocasia&#x27;s Welcome</span><span class="grade-badge grade-mid" title="17Lands [BRO]: C (55.5% GIH WR, n=12254) | In-theme pairs: WG: C- (54.4%), WR: C (56.1%)">C</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Seasoned Warrenguard">Seasoned Warrenguard</span><span class="grade-badge grade-mid" title="17Lands [BLB]: C+ (57.1% GIH WR, n=32717) | In-theme pairs: WG: B- (57.9%), WR: C (54.0%)">C+</span></li>
+          <li><span class="autocard" data-card="Clarion Spirit">Clarion Spirit</span><span class="grade-badge grade-sweet" title="17Lands [KHM]: A- (60.9% GIH WR, n=31885) | In-theme pairs: WG: A- (62.4%), WR: A (62.7%)">A-</span></li>
+          <li><span class="autocard" data-card="Dalkovan Packbeasts">Dalkovan Packbeasts</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C+ (56.6% GIH WR, n=47871) | In-theme pairs: WR: B (59.8%)">C+</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Gold &amp; Build-Arounds</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Warleader&#x27;s Call">Warleader&#x27;s Call</span><span class="grade-badge grade-sweet" title="17Lands [MKM]: A- (59.8% GIH WR, n=23971) | In-theme pairs: RG: B (56.7%), WG: C- (55.4%), WR: A (63.5%)">A-</span></li>
+          <li><span class="autocard" data-card="Bess, Soul Nourisher">Bess, Soul Nourisher</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Jetmir, Nexus of Revels">Jetmir, Nexus of Revels</span><span class="grade-badge grade-sweet" title="17Lands [SNC]: B- (57.7% GIH WR, n=5946) | In-theme pairs: WG: C- (57.0%)">B-</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}">
+        </span>
+        <span>Avenue B (RWB): Attack-Trigger Doubling &amp; Aggro-Sac (Windcrag Siege + Mobilize)</span>
+      </h2>
+    </div>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="War Effort">War Effort</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C+ (56.3% GIH WR, n=46637) | In-theme pairs: WR: B- (58.7%)">C+</span></li>
+          <li><span class="autocard" data-card="Stensia Uprising">Stensia Uprising</span><span class="grade-badge grade-sweet" title="17Lands [VOW]: A- (61.8% GIH WR, n=16110) | In-theme pairs: BR: A- (63.0%), WR: A (62.6%)">A-</span></li>
+          <li><span class="autocard" data-card="Searslicer Goblin">Searslicer Goblin</span><span class="grade-badge grade-sweet" title="17Lands [FDN]: A- (60.4% GIH WR, n=22875) | In-theme pairs: BR: A (61.9%), WR: A (60.5%)">A-</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/R.svg" alt="{R}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Stadium Headliner">Stadium Headliner</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B (58.5% GIH WR, n=22140) | In-theme pairs: WR: A- (61.8%)">B</span></li>
+          <li><span class="autocard" data-card="Bonecrusher Giant">Bonecrusher Giant</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Goblin Bombardment">Goblin Bombardment</span><span class="grade-badge grade-sweet" title="17Lands [WOE]: A- (61.9% GIH WR, n=12397) | In-theme pairs: BR: A (64.5%), WR: A- (61.3%)">A-</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Voice of Victory">Voice of Victory</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: A- (60.2% GIH WR, n=24319) | In-theme pairs: WB: A (61.7%), WR: A (63.1%)">A-</span></li>
+          <li><span class="autocard" data-card="Dalkovan Packbeasts">Dalkovan Packbeasts</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C+ (56.6% GIH WR, n=47871) | In-theme pairs: WB: B- (56.7%), WR: B (59.8%)">C+</span></li>
+          <li><span class="autocard" data-card="Skyknight Vanguard">Skyknight Vanguard</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Seasoned Warrenguard">Seasoned Warrenguard</span><span class="grade-badge grade-mid" title="17Lands [BLB]: C+ (57.1% GIH WR, n=32717) | In-theme pairs: WB: C+ (56.9%), WR: C (54.0%)">C+</span></li>
+          <li><span class="autocard" data-card="Duty Beyond Death">Duty Beyond Death</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C (55.6% GIH WR, n=40070) | In-theme pairs: WB: C (54.9%), WR: B- (58.6%)">C</span></li>
+          <li><span class="autocard" data-card="Clarion Spirit">Clarion Spirit</span><span class="grade-badge grade-sweet" title="17Lands [KHM]: A- (60.9% GIH WR, n=31885) | In-theme pairs: WB: A- (58.6%), WR: A (62.7%)">A-</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Transmogrant&#x27;s Crown">Transmogrant&#x27;s Crown</span><span class="grade-badge grade-sweet" title="17Lands [BRO]: B (58.5% GIH WR, n=16846) | In-theme pairs: BR: B+ (60.3%), WB: A- (62.4%), WR: C+ (57.6%)">B</span></li>
+          <li><span class="autocard" data-card="Venerated Stormsinger">Venerated Stormsinger</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C- (55.0% GIH WR, n=31423) | In-theme pairs: WB: B- (56.8%), WR: D+ (55.1%)">C-</span></li>
+          <li><span class="autocard" data-card="Yahenni, Undying Partisan">Yahenni, Undying Partisan</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Avenger of the Fallen">Avenger of the Fallen</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C- (55.0% GIH WR, n=17354) | In-theme pairs: WB: C (54.8%)">C-</span></li>
+          <li><span class="autocard" data-card="Infestation Sage">Infestation Sage</span><span class="grade-badge grade-sweet" title="17Lands [FDN]: B- (56.8% GIH WR, n=136752) | In-theme pairs: BR: B- (57.2%), WB: C+ (56.1%)">B-</span></li>
+          <li><span class="autocard" data-card="Woe Strider">Woe Strider</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Gold &amp; Build-Arounds</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Windcrag Siege">Windcrag Siege</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B (58.4% GIH WR, n=22745) | In-theme pairs: WR: A- (62.0%)">B</span></li>
+          <li><span class="autocard" data-card="Ruthless Lawbringer">Ruthless Lawbringer</span><span class="grade-badge grade-sweet" title="17Lands [OTJ]: B (58.3% GIH WR, n=61836) | In-theme pairs: BR: C (53.3%), WB: B+ (61.1%), WR: C- (54.1%)">B</span></li>
+          <li><span class="autocard" data-card="Oni-Cult Anvil">Oni-Cult Anvil</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: B+ (60.6% GIH WR, n=50221) | In-theme pairs: BR: A- (62.1%), WB: D- (53.2%), WR: B- (54.9%)">B+</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+        </span>
+        <span>Avenue C (WBG): &#x27;Afterlife&#x27; Aristocrats (Abzan Ascendancy + Dramatic Finale)</span>
+      </h2>
+    </div>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Elas il-Kor, Sadistic Pilgrim">Elas il-Kor, Sadistic Pilgrim</span><span class="grade-badge grade-sweet" title="17Lands [DMU]: B (59.8% GIH WR, n=42414) | In-theme pairs: BG: B- (59.1%), WB: A- (62.2%)">B</span></li>
+          <li><span class="autocard" data-card="Luminous Broodmoth">Luminous Broodmoth</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Duty Beyond Death">Duty Beyond Death</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C (55.6% GIH WR, n=40070) | In-theme pairs: WB: C (54.9%)">C</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/W.svg" alt="{W}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Garrison Cat">Garrison Cat</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Doomed Traveler">Doomed Traveler</span><span class="grade-badge grade-sweet" title="17Lands [SIR]: B (57.9% GIH WR, n=8139) | In-theme pairs: WB: B+ (59.9%), WG: B- (59.0%)">B</span></li>
+          <li><span class="autocard" data-card="Hunted Witness">Hunted Witness</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Bastion of Remembrance">Bastion of Remembrance</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Whip of Erebos">Whip of Erebos</span><span class="grade-badge grade-sweet" title="17Lands [PIO]: A- (60.2% GIH WR, n=5856) | In-theme pairs: BG: A (61.2%), WB: A- (60.1%)">A-</span></li>
+          <li><span class="autocard" data-card="Morbid Opportunist">Morbid Opportunist</span><span class="grade-badge grade-sweet" title="17Lands [MID]: B+ (61.2% GIH WR, n=52033) | In-theme pairs: BG: B (58.6%), WB: A- (62.9%)">B+</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Infestation Sage">Infestation Sage</span><span class="grade-badge grade-sweet" title="17Lands [FDN]: B- (56.8% GIH WR, n=136752) | In-theme pairs: BG: C+ (54.5%), WB: C+ (56.1%)">B-</span></li>
+          <li><span class="autocard" data-card="Nested Shambler">Nested Shambler</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Woe Strider">Woe Strider</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Tireless Provisioner">Tireless Provisioner</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Keen-Eyed Curator">Keen-Eyed Curator</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B (58.9% GIH WR, n=25081) | In-theme pairs: BG: B+ (60.6%), WG: B- (57.5%)">B</span></li>
+          <li><span class="autocard" data-card="Haywire Mite">Haywire Mite</span><span class="grade-badge grade-mid" title="17Lands [BRO]: C (55.6% GIH WR, n=17056) | In-theme pairs: BG: C (55.8%), WG: C (56.3%)">C</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Mosswood Dreadknight">Mosswood Dreadknight</span><span class="grade-badge grade-sweet" title="17Lands [WOE]: A- (60.6% GIH WR, n=23751) | In-theme pairs: BG: A (63.4%), WG: B (57.2%)">A-</span></li>
+          <li><span class="autocard" data-card="Tough Cookie">Tough Cookie</span><span class="grade-badge grade-sweet" title="17Lands [WOE]: A- (60.6% GIH WR, n=77729) | In-theme pairs: BG: A- (61.4%), WG: A- (60.2%)">A-</span></li>
+          <li><span class="autocard" data-card="Pawpatch Recruit">Pawpatch Recruit</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B+ (59.6% GIH WR, n=25540) | In-theme pairs: BG: B (59.4%), WG: A- (61.2%)">B+</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Gold &amp; Build-Arounds</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Dramatic Finale">Dramatic Finale</span><span class="grade-badge grade-mid" title="17Lands [STX]: C+ (57.2% GIH WR, n=14655) | In-theme pairs: BG: D- (48.6%), WB: B (60.2%)">C+</span></li>
+          <li><span class="autocard" data-card="Camellia, the Seedmiser">Camellia, the Seedmiser</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: A- (61.1% GIH WR, n=21969) | In-theme pairs: BG: A- (62.1%)">A-</span></li>
+          <li><span class="autocard" data-card="Hollowmurk Siege">Hollowmurk Siege</span><span class="grade-badge grade-mid" title="17Lands [TDM]: C (55.3% GIH WR, n=17509) | In-theme pairs: BG: B+ (60.0%)">C</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}">
+        </span>
+        <span>Avenue D (BGU Option 1): Botanical Graveyard (&#x27;Whenever Cards Leave Your Graveyard&#x27;)</span>
+      </h2>
+    </div>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Tormod, the Desecrator">Tormod, the Desecrator</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Corpses of the Lost">Corpses of the Lost</span><span class="grade-badge grade-mid" title="17Lands [LCI]: C+ (56.4% GIH WR, n=14506) | In-theme pairs: BG: C (56.4%), UB: B- (57.2%)">C+</span></li>
+          <li><span class="autocard" data-card="Syr Konrad, the Grim">Syr Konrad, the Grim</span><span class="grade-badge grade-mid" title="17Lands [FIN]: C- (54.6% GIH WR, n=23871) | In-theme pairs: BG: C+ (57.9%), UB: C- (54.8%)">C-</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Osteomancer Adept">Osteomancer Adept</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B (59.0% GIH WR, n=25586) | In-theme pairs: BG: B- (59.1%), UB: B (59.5%)">B</span></li>
+          <li><span class="autocard" data-card="Scrapwork Mutt">Scrapwork Mutt</span><span class="grade-badge grade-sweet" title="17Lands [BRO]: B (59.0% GIH WR, n=201094) | In-theme pairs: BG: C+ (58.1%), UB: B- (58.9%), UG: C+ (56.2%)">B</span></li>
+          <li><span class="autocard" data-card="Souls of the Lost">Souls of the Lost</span><span class="grade-badge grade-mid" title="17Lands [LCI]: C+ (56.6% GIH WR, n=12118) | In-theme pairs: BG: C+ (57.7%), UB: B (58.9%)">C+</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Dredger&#x27;s Insight">Dredger&#x27;s Insight</span><span class="grade-badge grade-sweet" title="17Lands [DFT]: B- (57.3% GIH WR, n=43617) | In-theme pairs: BG: B- (58.4%), UG: C (56.6%)">B-</span></li>
+          <li><span class="autocard" data-card="Willow Geist">Willow Geist</span><span class="grade-badge grade-dud" title="17Lands [MID]: D+ (53.3% GIH WR, n=4355) | In-theme pairs: BG: D+ (53.2%), UG: C- (56.3%)">D+</span></li>
+          <li><span class="autocard" data-card="Keen-Eyed Curator">Keen-Eyed Curator</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B (58.9% GIH WR, n=25081) | In-theme pairs: BG: B+ (60.6%), UG: B (59.3%)">B</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Rubblebelt Maverick">Rubblebelt Maverick</span><span class="grade-badge grade-mid" title="17Lands [MKM]: C+ (55.6% GIH WR, n=110184) | In-theme pairs: BG: C (55.9%), UG: C (56.8%)">C+</span></li>
+          <li><span class="autocard" data-card="Cache Grab">Cache Grab</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B- (57.7% GIH WR, n=136188) | In-theme pairs: BG: B- (59.1%), UG: C (57.1%)">B-</span></li>
+          <li><span class="autocard" data-card="Satyr Wayfinder">Satyr Wayfinder</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Ominous Roost">Ominous Roost</span><span class="grade-badge grade-mid" title="17Lands [MID]: C (55.6% GIH WR, n=17528) | In-theme pairs: UB: F (48.8%), UG: D- (53.1%)">C</span></li>
+          <li><span class="autocard" data-card="Dollhouse of Horrors">Dollhouse of Horrors</span><span class="grade-badge grade-sweet" title="17Lands [VOW]: B- (57.2% GIH WR, n=17400) | In-theme pairs: BG: B (58.4%), UB: B (58.6%), UG: B- (56.9%)">B-</span></li>
+          <li><span class="autocard" data-card="Ghostly Pilferer">Ghostly Pilferer</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Likeness Looter">Likeness Looter</span><span class="grade-badge grade-dud" title="17Lands [WOE]: D+ (52.9% GIH WR, n=9687) | In-theme pairs: UB: D (53.7%)">D+</span></li>
+          <li><span class="autocard" data-card="Contingency Plan">Contingency Plan</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Strategic Planning">Strategic Planning</span><span class="grade-badge grade-dud" title="17Lands [KHM]: D- (51.0% GIH WR, n=7335) | In-theme pairs: UB: C (48.9%), UG: D- (51.0%)">D-</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Gold &amp; Build-Arounds</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Kishla Skimmer">Kishla Skimmer</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B- (57.6% GIH WR, n=67010) | In-theme pairs: UG: C+ (58.1%)">B-</span></li>
+          <li><span class="autocard" data-card="Skyfisher Spider">Skyfisher Spider</span><span class="grade-badge grade-sweet" title="17Lands [BRO]: A- (62.1% GIH WR, n=50895) | In-theme pairs: BG: A (63.3%), UB: B+ (60.8%), UG: B+ (60.2%)">A-</span></li>
+          <li><span class="autocard" data-card="Honest Rutstein">Honest Rutstein</span><span class="grade-badge grade-sweet" title="17Lands [OTJ]: B (58.4% GIH WR, n=77527) | In-theme pairs: BG: B (60.0%), UB: C (56.1%), UG: B (59.3%)">B</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span class="pips">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}">
+          <img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}">
+        </span>
+        <span>Avenue E (BGU Option 2): Saboteurs, Ninjutsu &amp; Sneak (Combat Damage + Bounce-to-Hand)</span>
+      </h2>
+    </div>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Gix, Yawgmoth Praetor">Gix, Yawgmoth Praetor</span><span class="grade-badge grade-sweet" title="17Lands [BRO]: B+ (60.4% GIH WR, n=7322) | In-theme pairs: BG: A- (61.5%), UB: B (60.6%)">B+</span></li>
+          <li><span class="autocard" data-card="Biting-Palm Ninja">Biting-Palm Ninja</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: A- (62.2% GIH WR, n=24523) | In-theme pairs: BG: B+ (61.3%), UB: A (64.4%)">A-</span></li>
+          <li><span class="autocard" data-card="Dreamstealer">Dreamstealer</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/B.svg" alt="{B}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Changeling Outcast">Changeling Outcast</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Splinter, Hamato Yoshi">Splinter, Hamato Yoshi</span><span class="grade-badge grade-sweet" title="17Lands [TMT]: B- (59.0% GIH WR, n=19252) | In-theme pairs: BG: D- (53.3%)">B-</span></li>
+          <li><span class="autocard" data-card="Deep-Cavern Bat">Deep-Cavern Bat</span><span class="grade-badge grade-sweet" title="17Lands [LCI]: A- (61.9% GIH WR, n=51784) | In-theme pairs: BG: A (62.9%), UB: A (62.2%)">A-</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Toski, Bearer of Secrets">Toski, Bearer of Secrets</span><span class="grade-badge grade-sweet" title="17Lands [KHM]: B (58.5% GIH WR, n=9411) | In-theme pairs: BG: B+ (60.3%), UG: C+ (57.3%)">B</span></li>
+          <li><span class="autocard" data-card="Spring-Leaf Avenger">Spring-Leaf Avenger</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: B (60.3% GIH WR, n=23254) | In-theme pairs: BG: B+ (61.6%), UB: C- (56.5%), UG: B+ (62.3%)">B</span></li>
+          <li><span class="autocard" data-card="Questing Beast">Questing Beast</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/G.svg" alt="{G}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Jewel Thief">Jewel Thief</span><span class="grade-badge grade-sweet" title="17Lands [SNC]: B+ (60.2% GIH WR, n=132098)">B+</span></li>
+          <li><span class="autocard" data-card="Pawpatch Recruit">Pawpatch Recruit</span><span class="grade-badge grade-sweet" title="17Lands [BLB]: B+ (59.6% GIH WR, n=25540) | In-theme pairs: BG: B (59.4%), UG: B (60.3%)">B+</span></li>
+          <li><span class="autocard" data-card="Sentinel of the Nameless City">Sentinel of the Nameless City</span><span class="grade-badge grade-bomb" title="17Lands [LCI]: A (64.6% GIH WR, n=16834) | In-theme pairs: BG: A+ (65.8%), UG: A+ (64.0%)">A</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Payoffs</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Thousand-Faced Shadow">Thousand-Faced Shadow</span><span class="grade-badge grade-mid" title="17Lands [NEO]: C+ (57.2% GIH WR, n=18539) | In-theme pairs: UB: B- (59.6%), UG: D+ (55.0%)">C+</span></li>
+          <li><span class="autocard" data-card="Prosperous Thief">Prosperous Thief</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: B- (58.9% GIH WR, n=59012) | In-theme pairs: UB: B- (60.1%), UG: C+ (58.3%)">B-</span></li>
+          <li><span class="autocard" data-card="Mockingbird">Mockingbird</span><span class="grade-badge grade-mid" title="17Lands [BLB]: C+ (56.7% GIH WR, n=21048) | In-theme pairs: BG: D+ (55.2%), UB: C+ (57.0%), UG: B (59.4%)">C+</span></li>
+        </ul>
+        <h3 class="sub-role"><img class="mana-sym" src="https://svgs.scryfall.io/card-symbols/U.svg" alt="{U}"> Enablers</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Network Disruptor">Network Disruptor</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: B (59.7% GIH WR, n=167860) | In-theme pairs: UB: B (61.4%), UG: C (57.8%)">B</span></li>
+          <li><span class="autocard" data-card="Faerie Seer">Faerie Seer</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+          <li><span class="autocard" data-card="Donatello, Rad Scientist">Donatello, Rad Scientist</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+
+      <div class="slot-group">
+        <h3>Gold &amp; Build-Arounds</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Glissa Sunslayer">Glissa Sunslayer</span><span class="grade-badge grade-sweet" title="17Lands [ONE]: B (58.9% GIH WR, n=12424) | In-theme pairs: BG: A (61.1%), UB: C+ (53.4%)">B</span></li>
+          <li><span class="autocard" data-card="Silver-Fur Master">Silver-Fur Master</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: B+ (60.7% GIH WR, n=49955) | In-theme pairs: UB: B (61.5%)">B+</span></li>
+          <li><span class="autocard" data-card="Ingenious Infiltrator">Ingenious Infiltrator</span><span class="grade-badge grade-na" title="No 17Lands Arena draft data (Commander / older set)">—</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-header">
+      <h2 class="theme-title">
+        <span>Cross-Theme Noncreature Build-Around Bridges (For Locked Triads)</span>
+      </h2>
+    </div>
+
+    <div class="skeleton-grid">
+      <div class="slot-group">
+        <h3>GUR / BRG Bridges</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Up the Beanstalk">Up the Beanstalk</span><span class="grade-badge grade-sweet" title="17Lands [WOE]: B- (57.3% GIH WR, n=48674) | In-theme pairs: RG: C (55.7%), UG: C+ (56.1%)">B-</span></li>
+          <li><span class="autocard" data-card="Fight Rigging">Fight Rigging</span><span class="grade-badge grade-sweet" title="17Lands [SNC]: B+ (60.7% GIH WR, n=16924) | In-theme pairs: RG: A- (58.2%)">B+</span></li>
+          <li><span class="autocard" data-card="Weather Maker">Weather Maker</span><span class="grade-badge grade-sweet" title="17Lands [TMT]: B (60.5% GIH WR, n=8894) | In-theme pairs: UG: B (61.9%), UR: B (61.0%)">B</span></li>
+        </ul>
+      </div>
+      <div class="slot-group">
+        <h3>URW / UBR Bridges</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Proft&#x27;s Eidetic Memory">Proft&#x27;s Eidetic Memory</span><span class="grade-badge grade-sweet" title="17Lands [MKM]: B+ (58.9% GIH WR, n=26333) | In-theme pairs: UR: A- (59.7%), WU: A- (59.2%)">B+</span></li>
+          <li><span class="autocard" data-card="Cori-Steel Cutter">Cori-Steel Cutter</span><span class="grade-badge grade-sweet" title="17Lands [TDM]: B+ (59.8% GIH WR, n=28233) | In-theme pairs: UR: A (62.8%), WR: A- (62.1%)">B+</span></li>
+          <li><span class="autocard" data-card="Fiery Inscription">Fiery Inscription</span><span class="grade-badge grade-sweet" title="17Lands [LTR]: B- (58.4% GIH WR, n=57922) | In-theme pairs: UR: B- (60.0%), WR: D- (50.5%)">B-</span></li>
+        </ul>
+      </div>
+      <div class="slot-group">
+        <h3>WUB / GWU Bridges</h3>
+        <ul class="card-list">
+          <li><span class="autocard" data-card="Synthesizer Labship">Synthesizer Labship</span><span class="grade-badge grade-sweet" title="17Lands [EOE]: B+ (59.6% GIH WR, n=27917) | In-theme pairs: UB: B (59.1%), WU: A (61.8%)">B+</span></li>
+          <li><span class="autocard" data-card="Sledge-Class Seedship">Sledge-Class Seedship</span><span class="grade-badge grade-sweet" title="17Lands [EOE]: B- (57.0% GIH WR, n=16803)">B-</span></li>
+          <li><span class="autocard" data-card="Oni-Cult Anvil">Oni-Cult Anvil</span><span class="grade-badge grade-sweet" title="17Lands [NEO]: B+ (60.6% GIH WR, n=50221) | In-theme pairs: UB: D+ (54.9%), WB: D- (53.2%)">B+</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Card Image Tooltip -->
+  <div id="card-popover" aria-hidden="true">
+    <img id="pop-img" alt="" />
+  </div>
+
+  <script>
+    const popover = document.getElementById("card-popover");
+    const popImg = document.getElementById("pop-img");
+
+    function slugify(name) {
+      return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function scryfallImgUrl(name) {
+      return `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(name)}&format=image&version=normal`;
+    }
+
+    document.querySelectorAll(".autocard").forEach(el => {
+      const name = el.dataset.card || el.textContent.trim();
+      const localPath = `cache/images/${slugify(name)}.jpg`;
+      const remoteUrl = scryfallImgUrl(name);
+
+      el.addEventListener("mouseenter", (e) => {
+        // Try local cached image first (for 100% offline use); seamlessly fall back to Scryfall
+        popImg.onerror = () => {
+          popImg.onerror = null;
+          popImg.src = remoteUrl;
+        };
+        popImg.src = localPath;
+        popImg.alt = name;
+        popover.classList.add("visible");
+        positionPopover(e);
+      });
+
+      el.addEventListener("mousemove", positionPopover);
+      el.addEventListener("mouseleave", () => {
+        popover.classList.remove("visible");
+      });
+    });
+
+    function positionPopover(e) {
+      const pad = 16;
+      const w = 260;
+      const h = 362;
+      let x = e.clientX + pad;
+      let y = e.clientY + pad;
+
+      if (x + w > window.innerWidth - 12) {
+        x = e.clientX - w - pad;
+      }
+      if (y + h > window.innerHeight - 12) {
+        y = window.innerHeight - h - 12;
+      }
+      popover.style.left = `${Math.max(12, x)}px`;
+      popover.style.top = `${Math.max(12, y)}px`;
+    }
+  </script>
+</body>
+</html>

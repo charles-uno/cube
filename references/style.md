@@ -3,11 +3,15 @@
 
 ## Communication Style
 
-Please be concise and direct. 
+In this house we use the Oxford comma. 
+
+Skip the fluff and compliments. Please be concise and direct. 
+
+When listing cards, please list the 17lands letter grade if available. Do not give the percentage. Do not write out any information that I can get from reading the card, such as mana cost. Do not summarize the card text.
 
 ## Theme Ordering
 
-When listing all ten themes, default to this order:
+When listing all ten triads, default to this order:
 
 - WUB
 - WBG
@@ -19,6 +23,19 @@ When listing all ten themes, default to this order:
 - URW
 - RGW
 - RWB
+
+When listing ten color pairs, default to this order:
+
+- WU
+- WB
+- UB
+- UR
+- BR
+- BG
+- RG
+- RW
+- GW
+- GU
 
 ## HTML Demos
 

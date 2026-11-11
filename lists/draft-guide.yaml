@@ -1,0 +1,41 @@
+title: Uncommons Cube
+archetypes:
+  - colors: WUB
+    name: Artifacts
+    blurb: Thopter tokens, affinity, and metalcraft.
+
+  - colors: WBG
+    name: Aristocrats
+    blurb: Sacrifice creatures and tokens to drain life.
+
+  - colors: BRG
+    name: Dinosaurs
+    blurb: Curve out into 4+ power scaly behemoths.
+
+  - colors: BGU
+    name: Ninjas
+    blurb: Sneak attackers through and replay ETBs.
+
+  - colors: GWU
+    name: Tap / Untap
+    blurb: Convoke, mounts, and tap/untap triggers.
+
+  - colors: GUR
+    name: Ramp & Domain
+    blurb: Five-color fixing and big mana spells.
+
+  - colors: UBR
+    name: Discard
+    blurb: Looting, cycling, madness, and mayhem.
+
+  - colors: URW
+    name: Blink
+    blurb: Flicker and airbend creatures for value.
+
+  - colors: RGW
+    name: Go-Wide
+    blurb: 1/1 Warrior tokens and team-wide anthems.
+
+  - colors: RWB
+    name: Heroic
+    blurb: Combat tricks and removal trigger buffs.
