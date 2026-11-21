@@ -1,0 +1,117 @@
+Arcane Sanctum	
+Crumbling Necropolis	
+Savage Lands	
+Jungle Shrine	
+Seaside Citadel	
+Mystic Monastery	
+Opulent Palace	
+Nomad Outpost	
+Frontier Bivouac	
+Sandsteppe Citadel	
+Hemmer, Fixing What is Broken	Tap/Untap
+Captain America, Living Legend	Tap/Untap
+Tui and La, Moon and Ocean	Tap/Untap
+Gran-Gran	Tap/Untap, Draw/Discard
+Water Tribe Rallier	Tap/Untap
+Wanderbrine Trapper	Tap/Untap
+Haunt the Network	Artifacts
+Baleful Strix	Artifacts
+Whirler Rogue	Artifacts
+Thought Monitor	Artifacts
+Monoist Circuit-Feeder	Artifacts
+Pactdoll Terror	Artifacts
+Perforating Artist	Raid/Morbid
+Garna, Bloodfist of Keld	Raid/Morbid
+Spiteful Prankster	Raid/Morbid
+Skewer the Critics	Raid/Morbid
+Vampire Gourmand	Raid/Morbid
+Thought-Stalker Warlock	Raid/Morbid
+Cactusfolk Sureshot	Dinos
+Itzquinth, Firstborn of Gishath	Dinos
+Spit Flame	Dinos
+Belligerent Yearling	Dinos
+Regal Imperiosaur	Dinos
+Nasty Little Rabbit	Dinos
+Travel Preparations	Heroic
+Kutzil, Malamet Exemplar	Heroic
+Hero of Leina Tower	Heroic
+Gnarlback Rhino	Heroic
+Colleen Wing, Street Samurai	Heroic
+Honor	Heroic
+Elas il-Kor, Sadistic Pilgrim	Lifegain
+Wispdrinker Vampire	Lifegain
+Hinterland Sanctifier	Lifegain
+Lyra, Archangel of Dawn	Lifegain
+Withering Curse	Lifegain
+Starscape Cleric	Lifegain
+Glacial Dragonhunt	Draw/Discard
+Ecstatic Electromancer	Draw/Discard
+Charging Strifeknight	Draw/Discard
+Hobgoblin, Mantled Marauder	Draw/Discard
+Shoreline Looter	Draw/Discard
+Curator of Mysteries	Draw/Discard
+Vash, Freelance Archaeologist	Value
+Kraul Whipcracker	Value
+Temur Sabertooth	Value
+Hologram Stalker	Value
+High Fae Negotiator	Value
+D'Ghor Bloodletter	Value
+Heroic Reinforcements	Tokens
+Arabella, Abandoned Doll	Tokens
+Descendant of Storms	Tokens
+Release the Dogs	Tokens
+Hordeling Outburst	Tokens
+Shocking Sharpshooter	Tokens
+The Traveler	Lands
+Lessons from Life	Lands
+Snarl Song	Lands
+Syndicate Liquidators	Lands
+Cloak and Phaser	Lands
+Sweep the Skies	Lands
+Data, New Life	Artifacts, Draw/Discard
+Mad Ratter	Draw/Discard, Tokens
+Savage Stomp	Dinos, Heroic
+Searslicer Goblin	Tokens, Raid/Morbid
+Clifftop Lookout	Lands, Value
+Traxos, Scourge Eternal	Artifacts, Dinos
+Flayed One	Lifegain, Artifacts
+Etherium Spinner	Lands, Artifacts
+Voidforged Titan	Artifacts, Raid/Morbid
+Corridor Monitor	Artifacts, Tap/Untap
+Inkshape Demonstrator	Lifegain, Heroic
+Adventurous Impulse	Dinos, Lands, Value
+Kolaghan Warmonger	Dinos, Raid/Morbid
+Boundary Lands Ranger	Draw/Discard, Dinos
+Seeker of the Way	Lifegain, Heroic
+Katara, Heroic Healer	Lifegain, Tokens
+Cheeky House-Mouse	Heroic
+Vizier of Tumbling Sands	Draw/Discard, Lands, Tap/Untap
+Sanguinary Priest	Raid/Morbid, Lifegain
+MACH-1, Swooping Scoundrel	Lifegain, Artifacts
+Tyrox, Saurid Tyrant	Dinos
+Katara, Bending Prodigy	Tap/Untap, Draw/Discard
+Transcendent Archaic	Lands
+Sundering Archaic	Lands
+Marauding Mako	Draw/Discard
+Scrounging Skyray	Draw/Discard
+Chaos Terminator Lord	Raid/Morbid, Dinos
+Bonded Horncrest	Dinos, Tokens
+Cenote Scout	Value
+Spider-UK	Tokens, Lifegain
+Test of Loyalty	Value
+Circuit Mender	Artifacts, Draw/Discard, Lifegain
+Elvish Regrower	Value
+Glimmer Seeker	Tap/Untap, Tokens
+Prey's Vengeance	Heroic
+Bhaal's Invoker	Dinos, Lands
+Sunstar Chaplain	Tap/Untap
+Misty Mountains Raider	Raid/Morbid, Tokens
+Bloodsoaked Champion	Raid/Morbid
+Dream Beavers	Raid/Morbid, Lifegain
+Etherium Pteramander	Raid/Morbid, Artifacts
+Faerie Dreamthief	Raid/Morbid, Value
+Stadium Headliner	Tokens
+Seasoned Warrenguard	Tokens
+Kid Loki	Draw/Discard
+Greasewrench Goblin	Draw/Discard
+Intrepid Ace	Dinos

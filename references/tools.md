@@ -29,6 +29,6 @@ A few big disclaimers about using this data:
 - Not all cards have data! Commander sets don't get drafted, but we still have access to those cards
 - The absolute numbers are meaningless! Don't bother quoting them. The actual average win rate should be exactly 50%, but the average in this data is closer to 55%. Stick with the letter grades
 
-We should steer clear of anything rated A+ or A. Those cards are likely bombs that can run away with a game on their own, independent of theme support. 
+We should steer clear of anything rated A or higher. Those cards are likely bombs that can run away with a game on their own, independent of theme support. 
 
-It looks like the strongest recent uncommons show up at A-/B+/B. In order to be viable, each theme probably needs a few of those.
+It looks like the strongest recent uncommons show up at A-/B+/B/B-. In order to be viable, each theme probably needs a few of those.
