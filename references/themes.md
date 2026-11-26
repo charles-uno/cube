@@ -61,9 +61,9 @@ For a three-color theme that means:
 - Three enablers per color
 - Three on-theme multicolor cards, one per color pair (eg UBR -> UB, BR, UR)
 
-Enablers will often support more than one theme. This is good. For example, graveyard decks and lifegain decks are both happy to see [[Scout the City]]. 
+Enablers will often support more than one theme. This is good. For example, graveyard decks and lifegain decks are both happy to see [[Scout the City]]. It's also allowed for a payoff in one theme to be an enabler for another. 
 
-Payoffs should generally *not* overlap between themes. The payoffs should also be *pretty strong*. These are signposts. We want drafters to pick these early and draft around them. I expect a decent number of payoffs in the cube to be rares rather than uncommons.
+That said: we do need a few cards that pull a drafter into this particular theme! Let's say half a dozen. Three per color in a pair, two per color in a triad. These cards are typically payoffs, but may sometimes be enablers. The important thing is that these cards are *strong* (let's say B/B+/A- on 17lands). We want drafters to pick these early and draft around them. I expect a decent number of payoffs in the cube to be rares rather than uncommons.
 
 Avoid bombs which incidentally support a theme but in practice dominate a game on their own (eg [[Nova Hellkite]] does not care about dragon kindred synergies). 
 
